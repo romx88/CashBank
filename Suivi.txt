@@ -13,7 +13,7 @@ JOUALLA Samy Classe B
 CALVO Tom Classe A
 BERNARD Roméo Classe A 
 
-Thème : Merci de compléter avec le thème sur lequel vous travaillez 
+Thème : Backend machine slot
 
 Nom du projet : CashBank
 
@@ -23,12 +23,16 @@ Pitch du projet : Un casino en ligne avec des jeux d'argent fictif!
 
 Suivi – Lundi 3 juin 2024  
 
-Avancées sur le projet 
+Avancées sur le projet :
+Setup fini 
 
 
-Difficultés rencontrées 
+Difficultés rencontrées :
+Première fois avec node.js rafraichissment 
 
-Solutions apportées 
+Solutions apportées :
+live serveur
+documentation
 
 
 
