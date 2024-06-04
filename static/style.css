@@ -1,0 +1,333 @@
+/* ----------------------------------------------SIGNUP---------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+body {
+    font-family: Outfit, sans-serif;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.img-welcome {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 270px;
+    height: 220px;
+    z-index: 0;
+}
+
+.title-welcome {
+    position: absolute;
+    top: 70px;
+    right: -25px;
+    transform: translate(-30%, -50%);
+    z-index: 0;
+    text-align: center;
+    color: white;
+    white-space: nowrap;
+    text-align: right;
+    line-height: 40px;
+}
+
+.right-section {
+    border-radius: 15px;
+    background-color: #FFF;
+    margin-left: -25px;
+    height: 330px; 
+    width: 330px;
+    padding: 0px 40px 0px 40px;
+    z-index: 2;
+}
+
+.left-section {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    height: 330px;
+    width: 330px;
+    background-color: #60A9C0;
+    border-radius: 15px;
+}
+
+.signup-form {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.title-second {
+    margin: 5px 0;
+}
+
+.title-second span {
+    color: #80C2DA;
+}
+
+.input-auth {
+    text-align: left;
+    position: relative;
+}
+
+.input-auth input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; 
+}
+
+.button-auth {
+    width: 100%;
+    padding: 10px;
+    background-color: #80C2DA;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.button-auth:hover {
+    background-color: #6eaec0;
+    transform: scale(1.05); 
+}
+
+.message {
+    margin-top: 5px;
+}
+
+.message a {
+    color: #80C2DA;
+    text-decoration: none;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}
+
+.img-eye1 {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 10px;
+    top: 19%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.img-eye2 {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 10px;
+    top: 69%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* -----------------------------------------------LOGIN--------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.login-left-section, .login-right-section {
+    position: relative;
+    border-radius: 15px;
+    height: 330px;
+    width: 330px;
+}
+
+.login-left-section {
+    background-color: #60A9C0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-img-welcome {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 270px;
+    height: 220px;
+}
+
+.login-title-welcome {
+    position: absolute;
+    top: 70px;
+    right: -25px;
+    transform: translate(-30%, -50%);
+    text-align: right;
+    color: white;
+    white-space: nowrap;
+    line-height: 40px;
+}
+
+.login-right-section {
+    background-color: #FFF;
+    margin-left: -25px;
+    z-index: 2;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-title-second {
+    margin: 10px 0;
+}
+
+.login-title-second span {
+    color: #80C2DA;
+}
+
+.login-input-auth {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.login-input-auth input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.login-password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.login-button-auth {
+    width: 100%;
+    padding: 10px;
+    background-color: #80C2DA;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-button-auth:hover {
+    background-color: #6eaec0;
+    transform: scale(1.05);
+}
+
+.message {
+    margin-top: 15px;
+}
+
+.message a {
+    color: #80C2DA;
+    text-decoration: none;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}
+
+.login-img-eye {
+    width: 13px;
+    height: 13px;
+}
+
+
+/* -------------------------------------------POP UP---------------------------------------- */
+
+#popup-signup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1001;
+    display: none;
+}
+.no-scroll {
+    overflow: hidden;
+}
+#popup-signup.open{
+    display: block !important
+}
+
+#popup-login{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1001;
+    display: none;
+}
+
+#popup-login.open{
+    display: block !important
+}
+
+.popup-content{
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    /* background: white; */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.popup-exit{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 3;
+}
+
+.messageError{
+    color: red;
+}
