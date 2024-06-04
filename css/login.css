@@ -56,8 +56,8 @@ header {
 .content{
     background-image: url("/img/login-card.png");
     background-size: contain; 
-    width: 470px;
-    height: 258px;
+    width: 471px;
+    height: 258.1px;
     position: absolute;
     top: 18%;
     left: 50%;

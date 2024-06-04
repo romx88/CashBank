@@ -84,6 +84,18 @@ header {
     margin: 10px 20px 10px 10px;
 }
 
+.button--coins:active{
+    display: flex;
+    background-image: url("/img/coins-button.png");
+    background-size: cover; 
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+    margin: 11px 20px 10px 10px;
+}
+
 #button--coins-left{
    transform: rotate(180deg);
 }

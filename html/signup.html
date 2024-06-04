@@ -17,9 +17,9 @@
 
     <div class="content">
         <div class="avatar-selection">
-            <button id="button--coins-left" class="button--coins" ></button>
-            <img src="/img/character/default.png" alt="avatar img" class="avatar">
-            <button id="button--coins-right" class="button--coins" ></button>
+            <button id="button--coins-left" class="button--coins" onclick="Before()"></button>
+            <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
+            <button id="button--coins-right" class="button--coins" onclick="After()"></button>
         </div>
         <form action="" class="signup-form">
             <div class="input-container">
@@ -43,4 +43,27 @@
       <img src="/img/nuage-background.png" class="bottom-image" />
     </footer>
   </body>
+
+  <script>
+    function Before() {
+        let characterImg = document.getElementById("character").src
+        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+
+        if (nbCharacter != 0) {
+            console.log(nbCharacter)
+            nbCharacter-- 
+            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+        }
+    }
+
+    function After() {
+        let characterImg = document.getElementById("character").src
+        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+
+        if (nbCharacter != 1) {
+            nbCharacter++
+            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+        }
+    }
+  </script>
 </html>
