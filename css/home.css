@@ -4,7 +4,6 @@ body {
   min-height: 100vh;
   margin: 0;
   background-color: rgb(102, 208, 240);
-  background-image: url("/img/top.png");
   background-repeat: no-repeat;
 }
 
@@ -14,6 +13,9 @@ header {
   height: 20%;
   width: 100%;
   max-width: 100%;
+  background-image: url("/img/top.png");
+  background-size: cover;
+  z-index: 1;
 }
 
 .top {
