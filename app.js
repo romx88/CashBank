@@ -15,7 +15,14 @@ var debugEl = document.getElementById('debug'),
  */
 var roll = function(reel, offset) {
     offset = offset || 0;
-    var delta = (offset + 2) * num_icons + Math.round(Math.random() * num_icons);
+    var delta;
+
+    // Use the rigged values if they exist
+    if (indexes.length > 0) {
+        delta = (offset + 2) * num_icons + indexes[offset];
+    } else {
+        delta = (offset + 2) * num_icons + Math.round(Math.random() * num_icons);
+    }
 
     return new Promise(function(resolve, reject) {
         var style = getComputedStyle(reel),
@@ -41,25 +48,19 @@ var roll = function(reel, offset) {
  */
 var selectedIcons = [];
 function rollAll() {
-	var reelsList = document.querySelectorAll('.slots > .reel');
+    var reelsList = document.querySelectorAll('.slots > .reel');
     var reelsArray = Array.prototype.slice.call(reelsList);
-
     Promise
-        .all(reelsArray.map(function(reel, i) { return roll(reel, i); }))
-        .then(function(deltas) {
-            selectedIcons = deltas.map(function(delta, i) { 
-                indexes[i] = (indexes[i] + delta)%num_icons; 
-                return iconMap[indexes[i]];
-            });
-            debugEl.textContent = selectedIcons.join(' - ');
-win();
-		
-            if (indexes[0] == indexes[1] || indexes[1] == indexes[2]) {
-                var winCls = indexes[0] == indexes[2] ? "win2" : "win1";
-                document.querySelector(".slots").classList.add(winCls);
-                setTimeout(function() { document.querySelector(".slots").classList.remove(winCls); }, 2000)
-            }
+    .all(reelsArray.map(function(reel, i) { return roll(reel, i); }))
+    .then(function(deltas) {
+        selectedIcons = deltas.map(function(delta, i) { 
+            indexes[i] = (indexes[i] + delta)%num_icons; 
+            return iconMap[indexes[i]];
         });
+        var machineCreditText = document.getElementById('machine-credit').textContent;
+        var machineCredit = parseInt(machineCreditText.split(' : ')[1]);
+        win(machineCredit); 
+    });
 };
 
 window.onload = function() {
@@ -71,15 +72,18 @@ window.onload = function() {
 document.getElementById('pay').addEventListener('click', function() {
     // Get the current credits
     var playerCredit = parseInt(document.getElementById('player-credit').textContent.split(' : ')[1]);
-    var machineCredit = parseInt(document.getElementById('machine-credit').textContent.split(' : ')[1]);
+    var winCredit = parseInt(document.getElementById('win-credit').textContent);
 
-    // Transfer the credit from the machine to the player
-    playerCredit += machineCredit;
-    machineCredit = 0;
+    // Check if winCredit is greater than 0
+    if (winCredit > 0) {
+        // Transfer the credit from the machine to the player
+        playerCredit += winCredit;
+        winCredit = 0;
 
-    // Update the credit displays
-    document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
-    document.getElementById('machine-credit').textContent = 'Crédit de la machine : ' + machineCredit;
+        // Update the credit displays
+        document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
+        document.getElementById('win-credit').textContent = winCredit;
+    }
 });
 
 document.getElementById('bet-more').addEventListener('click', function() {
@@ -87,11 +91,11 @@ document.getElementById('bet-more').addEventListener('click', function() {
     var playerCredit = parseInt(document.getElementById('player-credit').textContent.split(' : ')[1]);
     var machineCredit = parseInt(document.getElementById('machine-credit').textContent.split(' : ')[1]);
 
-    // Check if the player has enough credits
-    if (playerCredit > 0) {
+    // Check if the player has enough credits and the machine credit is less than 2000
+    if (playerCredit > 0 && machineCredit < 2000) {
         // Transfer the credit from the player to the machine
-        playerCredit -= 1;
-        machineCredit += 1;
+        playerCredit -= 5;
+        machineCredit += 5;
 
         // Update the credit displays
         document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
@@ -107,8 +111,8 @@ document.getElementById('bet-less').addEventListener('click', function() {
     // Check if the machine has enough credits
     if (machineCredit > 0) {
         // Transfer the credit from the machine to the player
-        playerCredit += 1;
-        machineCredit -= 1;
+        playerCredit += 5;
+        machineCredit -= 5;
 
         // Update the credit displays
         document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
@@ -122,87 +126,31 @@ document.getElementById('bet-max').addEventListener('click', function() {
     var machineCredit = parseInt(document.getElementById('machine-credit').textContent.split(' : ')[1]);
 
     // Calculate the amount to transfer from the player to the machine
-    var transferAmount = 2000 - machineCredit;
+    var transferAmount = Math.min(playerCredit, 2000 - machineCredit);
 
-    // Check if the player has enough credits
-    if (playerCredit >= transferAmount) {
-        // Transfer the credit from the player to the machine
-        playerCredit -= transferAmount;
-        machineCredit += transferAmount;
+    // Transfer the credit from the player to the machine
+    playerCredit -= transferAmount;
+    machineCredit += transferAmount;
 
-        // Update the credit displays
-        document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
-        document.getElementById('machine-credit').textContent = 'Crédit de la machine : ' + machineCredit;
-    }
+    // Update the credit displays
+    document.getElementById('player-credit').textContent = 'Crédit du joueur : ' + playerCredit;
+    document.getElementById('machine-credit').textContent = 'Crédit de la machine : ' + machineCredit;
 });
-// Définition des variables manquantes
-var playerCredits = 3000;
-var machineCredits = 0;
-var bet = 0;
-var jackpot = 5000; // Définissez la valeur du jackpot selon vos besoins
-var x = 2; // Définissez la valeur de x selon vos besoins
 
-// ...
+var oldWinCredit = 0;
 
-function win() {
-    // Vérifie si toutes les icônes sont les mêmes
-    if (selectedIcons.every((icon, i, arr) => icon === arr[0])) {
-        // Si c'est le cas, le joueur gagne le jackpot
-        playerCredits += bet * 5;
-        debugEl.textContent = "Jackpot! Vous avez gagné " + bet * 5 + " crédits!";
-        document.getElementById('win-credit').textContent = "Win : " + (bet + bet * 5);
+function win(machineCredit) {
+    // Sort the selected icons
+    var sortedIcons = selectedIcons.slice().sort();
+
+	if (selectedIcons[0] === selectedIcons[1] && selectedIcons[0] === selectedIcons[2]) {
+        debugEl.textContent =(' JACKPOT !');
+        winCredit = machineCredit * 10 + oldWinCredit; // Ajouter l'ancien crédit gagné
+        document.getElementById('win-credit').textContent = winCredit;
+        document.getElementById('machine-credit').textContent = 'Crédit de la machine : 0';  
+        oldWinCredit = winCredit; // Mettre à jour l'ancien crédit gagné
     }
-    // Vérifie si les deux premières icônes sont les mêmes et la troisième est différente
-    else if (selectedIcons[0] === selectedIcons[1] && selectedIcons[1] !== selectedIcons[2]) {
-        // Si c'est le cas, le joueur gagne 1.5 fois sa mise
-        playerCredits += bet * 1.5;
-        debugEl.textContent = "Vous avez gagné " + bet * 1.5 + " crédits!";
-        document.getElementById('win-credit').textContent = "Win : " + (bet + bet * 1.5);
-    }
-    // Vérifie si les deux dernières icônes sont les mêmes
-    else if (selectedIcons[1] === selectedIcons[2]) {
-        // Si c'est le cas, le joueur gagne le double de sa mise
-        playerCredits += bet * 2;
-        debugEl.textContent = "Vous avez gagné " + bet * 2 + " crédits!";
-        document.getElementById('win-credit').textContent = "Win : " + (bet + bet * 2);
-    }
-    // Vérifie si les trois icônes sont en ordre croissant
-    else if (selectedIcons.every((icon, i, arr) => icon === iconMap[i])) {
-        // Si c'est le cas, le joueur gagne le triple de sa mise
-        playerCredits += bet * 3;
-        debugEl.textContent = "Vous avez gagné " + bet * 3 + " crédits!";
-        document.getElementById('win-credit').textContent = "Win : " + (bet + bet * 3);
-    }
-    // Vérifie si les trois icônes sont en ordre décroissant
-    else if (selectedIcons.every((icon, i, arr) => icon === iconMap[8 - i])) {
-        // Si c'est le cas, le joueur gagne le triple de sa mise
-        playerCredits += bet * 3;
-        debugEl.textContent = "Vous avez gagné " + bet * 3 + " crédits!";
-        document.getElementById('win-credit').textContent = "Win : " + (bet + bet * 3);
-    }
-    else {
-        // Vérifie si les trois icônes sont les mêmes (jackpot)
-        if (selectedIcons[0] === selectedIcons[1] && selectedIcons[1] === selectedIcons[2]) {
-            playerCredits += jackpot; // le joueur gagne le jackpot
-            debugEl.textContent = "Jackpot, vous avez gagné le jackpot!";
-            document.getElementById('win-credit').textContent = "Win : " + jackpot; // affiche que le joueur a gagné le jackpot
-        }
-        // Vérifie si les deux premières icônes sont les mêmes et la troisième est différente (gagner fois x)
-        else if (selectedIcons[0] === selectedIcons[1] && selectedIcons[1] !== selectedIcons[2]) {
-            playerCredits += bet * x; // le joueur gagne sa mise multipliée par x
-            debugEl.textContent = "Combo de deux, vous avez gagné votre mise fois " + x + "!";
-            document.getElementById('win-credit').textContent = "Win : " + bet * x; // affiche que le joueur a gagné sa mise multipliée par x
-        }
-        // Dans tous les autres cas, le joueur perd
-        else {
-			playerCredits -= bet; // déduit la mise du crédit du joueur
-			debugEl.textContent = "Vous avez perdu votre mise!";
-			document.getElementById('win-credit').textContent = "Win : 0"; // affiche que le joueur n'a rien gagné
-		}
-    }
-	machineCredits = 0;
-	document.getElementById('machine-credit').textContent = 'Crédit de la machine : ' + machineCredits;
-	document.getElementById('bet-credit').textContent = 'Bet : ' + bet;
+  
 }
 
 
