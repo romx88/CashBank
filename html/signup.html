@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test</title>
+    <link rel="stylesheet" href="/css/signup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="top">
+        <img src="/img/coin.png" class="coin" />
+        <img src="/img/money.png" class="money" />
+        <input type="image" id="image" alt="Login" src="/img/no-character.png" />
+      </div>
+    </header>
+
+    <div class="content">
+        <div class="avatar-selection">
+            <button id="button--coins-left" class="button--coins" onclick="Before()"></button>
+            <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
+            <button id="button--coins-right" class="button--coins" onclick="After()"></button>
+        </div>
+        <form action="" class="signup-form">
+            <div class="input-container">
+                <img src="/img/icon/user.png" alt="" class="icon--pseudo">
+                <input required class="input--pseudo" type="text" placeholder="username">
+              </div>
+            <div class="input-container">
+                <img src="/img/icon/password.png" alt="" class="icon--password">
+                <input required class="input--password" type="password" placeholder="password">
+            </div>
+            <div class="input-container">
+                <img src="/img/icon/password.png" alt="" class="icon--password">
+                <input required class="input--password" type="password" placeholder="password">
+            </div>
+        </form>
+        <p class="message" >Already have an account? <a href="/login">Login</a></p>
+        <button class="signup">sign up</button>
+    </div>
+
+    <footer>
+      <img src="/img/nuage-background.png" class="bottom-image" />
+    </footer>
+  </body>
+
+  <script>
+    function Before() {
+        let characterImg = document.getElementById("character").src
+        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+
+        if (nbCharacter != 0) {
+            console.log(nbCharacter)
+            nbCharacter-- 
+            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+        }
+    }
+
+    function After() {
+        let characterImg = document.getElementById("character").src
+        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+
+        if (nbCharacter != 1) {
+            nbCharacter++
+            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+        }
+    }
+  </script>
+</html>
