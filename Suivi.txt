@@ -24,11 +24,11 @@ Pitch du projet : Un casino en ligne avec des jeux d'argent fictif!
 Suivi – Lundi 3 juin 2024  
 
 Avancées sur le projet :
-Setup fini 
+Setup fini roulette fonctionnelle a 1 essai
 
 
 Difficultés rencontrées :
-Première fois avec node.js rafraichissment 
+Première fois avec node.js, rafraichissment , relance, 
 
 Solutions apportées :
 live serveur
@@ -38,12 +38,16 @@ documentation
 
 Suivi – Mardi 4 juin 2024  
 
-Avancées sur le projet 
+Avancées sur le projet :
+Ajout des boutton, des crédit user/machine, win fonction et affichage.
 
  
-Difficultés rencontrées 
+Difficultés rencontrées:
+fonction win gerer les combos
 
-Solutions apportées 
+Solutions apportées:
+regarder les autres casino
+
 
  
 
