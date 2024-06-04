@@ -63,12 +63,19 @@ header {
   width: 30%;
 }
 
+.container--money{
+  display: flex;
+  z-index: 3;
+  margin-left: 50%;
+  transform: translate(-50%);
+
+  width: fit-content;
+  height: fit-content;
+}
+
 .input--money{
   width: 200px;
   height: 40px;
-  margin-top: 20px;
-  margin-left: 50%;
-  transform: translate(-50%);
 
 
   background: #887C7B;
@@ -85,4 +92,96 @@ header {
   font-size: 14px;
   line-height: 135.5%;
   color: rgb(255, 255, 255);
+}
+
+.input-container {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.icon--money {
+  position: absolute;
+  top: 39%;
+  left: 7px;
+  width: 20px;
+  height: 20px;
+}
+
+.button--less{
+  box-sizing: border-box;
+  padding: 2px 18px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: 0px 9px 0px #515795;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  margin-right: 0px;
+  cursor: pointer;
+  transform: translate(-50%);
+}
+
+.button--less:active{
+  box-sizing: border-box;
+  padding: 2px 18px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: none;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  cursor: pointer;
+  transform: translate(-50%);
+}
+
+.button--more{
+  box-sizing: border-box;
+  padding: 2px 15px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: 0px 9px 0px #515795;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  cursor: pointer;
+  transform: translate(-50%);
+}
+
+.button--more:active{
+  box-sizing: border-box;
+  padding: 2px 15px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: none;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  cursor: pointer;
+  transform: translate(-50%);
 }
