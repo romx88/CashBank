@@ -1,37 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>test</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/css/login.css" />
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <div class="top">
-        <img src="/img/coin.png" class="coin" />
-        <img src="/img/money.png" class="money" />
-        <input type="image" id="image" alt="Login" src="/img/no-character.png" />
-      </div>
+        <div class="top">
+            <img src="/img/coin.png" class="coin" />
+            <img src="/img/money.png" class="money" />
+            <input type="image" id="image" alt="Login" src="/img/no-character.png" />
+        </div>
     </header>
-
     <div class="content">
-        <form action="" class="login-form">
+        <form class="login-form" onsubmit="login(event)">
             <div class="input-container">
                 <img src="/img/icon/user.png" alt="" class="icon--pseudo">
-                <input required class="input--pseudo" type="text" placeholder="username">
-              </div>
+                <input required id="login-pseudo" class="input--pseudo" type="text" placeholder="username">
+            </div>
             <div class="input-container">
                 <img src="/img/icon/password.png" alt="" class="icon--password">
-                <input required class="input--password" type="password" placeholder="password">
+                <input required id="login-password" class="input--password" type="password" placeholder="password">
             </div>
+            <button type="submit" class="login">Log in</button>
         </form>
-        <p class="message" >Don't have an account? <a href="/signup">Sign Up</a></p>
-        <button class="login">Log in</button>
+        <p class="message">Don't have an account? <a href="/signup.html">Sign Up</a></p>
     </div>
-
     <footer>
-      <img src="/img/nuage-background.png" class="bottom-image" />
+        <img src="/img/nuage-background.png" class="bottom-image" />
     </footer>
-  </body>
+    <script>
+        function login(event) {
+            event.preventDefault();
+            const pseudo = document.getElementById('login-pseudo').value;
+            const password = document.getElementById('login-password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful!') {
+                    window.location.href = '/game.html';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
 </html>
