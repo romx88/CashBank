@@ -26,6 +26,13 @@ header {
   box-sizing: border-box;
 }
 
+.character {
+  margin-top: 20px;
+  margin-right: 20px;
+  width: 7%;
+  height: 7%;
+}
+
 .div-money {
   grid-column-start: 1;
   grid-column-end: 2;
@@ -102,7 +109,7 @@ header {
   transform: translate(-70px, -267px);
 }
 
-.delete-button {
+.delete-button{
   z-index: 2;
   box-sizing: border-box;
   padding: 2px 15px;
@@ -117,7 +124,7 @@ header {
   font-weight: 400;
   font-size: 30px;
   line-height: 135.5%;
-  color: rgba(0, 0, 0, 0.686);
+  color: rgba(255, 0, 0, 0.686);
 
   cursor: pointer;
   margin-top: 5px;
