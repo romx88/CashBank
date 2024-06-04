@@ -63,3 +63,31 @@ header {
   height: 435.5px;
   width: 321.5px;
 }
+
+.avatar{
+  margin-top: 15%;
+  margin-left: 50%;
+  transform: translate(-50%);
+
+  width: 128px;
+  height: 122px;
+}
+
+.horizontal-bar{
+  width: 80%;
+  height: 2px;
+  background-color: black;
+
+  margin-top: 10px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.account-name{
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+}
