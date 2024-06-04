@@ -54,44 +54,14 @@ header {
 }
   
 .content{
-    background-image: url("/img/signup-card.png");
+    background-image: url("/img/login-card.png");
     background-size: contain; 
     width: 470px;
-    height: 386px;
+    height: 258px;
     position: absolute;
     top: 18%;
     left: 50%;
     transform: translate(-50%);
-}
-
-.avatar-selection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-.button--coins{
-    display: flex;
-    background-image: url("/img/coins-button.png");
-    background-size: cover; 
-    width: 44px;
-    height: 44px;
-    border-radius: 100%;
-    cursor: pointer;
-    border: none;
-    margin: 10px 20px 10px 10px;
-}
-
-#button--coins-left{
-   transform: rotate(180deg);
-}
-
-.avatar{
-    width: 80px;
-    height: 80px;
-    filter: drop-shadow(-4px 9px 4px rgba(0, 0, 0, 0.25));
 }
 
 .input--pseudo{
@@ -147,7 +117,8 @@ header {
     color: rgba(255, 255, 255, 0.686);
 }
 
-.signup-form{
+.login-form{
+    margin-top: 13%;
     margin-left: 50%;
     transform: translate(-60%);
 }
@@ -174,7 +145,7 @@ header {
     height: 20px;
 }
 
-.signup{
+.login{
     box-sizing: border-box;
     padding: 2px 15px;
     background: #FEFEFF;
@@ -195,7 +166,7 @@ header {
     transform: translate(-50%);
 }
 
-.signup:active{
+.login:active{
     box-sizing: border-box;
     padding: 2px 15px;
     background: #FEFEFF;
