@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: rgb(102, 208, 240);
+    background-repeat: no-repeat;
+}
+  
+header {
+    position: fixed;
+    top: 0;
+    height: 20%;
+    width: 100%;
+    max-width: 100%;
+    background-image: url("/img/top.png");
+    background-size: cover;
+    z-index: 1;
+}
+  
+.top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+  
+#image {
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 7%;
+    height: 7%;
+}
+  
+.money {
+    width: 20%;
+}
+  
+.coin {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 7%;
+    height: 7%;
+}  
+  
+.bottom-image {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    z-index: -1;
+}
+
+.content{
+  background-image: url("/img/card-profile.png");
+  background-size: contain;
+
+  margin-top: 10%;
+  margin-left: 50%;
+  transform: translate(-50%);
+  height: 435.5px;
+  width: 321.5px;
+}
+
+.avatar{
+  margin-top: 15%;
+  margin-left: 50%;
+  transform: translate(-50%);
+
+  width: 128px;
+  height: 122px;
+}
+
+.horizontal-bar{
+  width: 80%;
+  height: 2px;
+  background-color: black;
+
+  margin-top: 10px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.account-name{
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+}
+
+.container--account{
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: 50%;
+  transform: translate(-50%);
+
+
+  background: #887C7B;
+  border: 2px solid #341D1A;
+  box-shadow: inset 0px 7px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  padding-left: 30px;
+  border-radius: 15px;
+  box-sizing: border-box;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 135.5%;
+  color: rgb(255, 255, 255);
+}
+
+.container--button{
+  position: relative;
+}
+
+.button--disconect{
+  box-sizing: border-box;
+  padding: 2px 15px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: 0px 9px 0px #515795;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  position: absolute;
+  cursor: pointer;
+  top: 20px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.button--disconect:active{
+  box-sizing: border-box;
+  padding: 2px 15px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: none;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(0, 0, 0, 0.686);
+
+  position: absolute;
+  cursor: pointer;
+  top: 29px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.button--delete{
+  box-sizing: border-box;
+  padding: 2px 47px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: 0px 9px 0px #515795;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(255, 0, 0, 0.76);
+
+  position: absolute;
+  cursor: pointer;
+  top: 80px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.button--delete:active{
+  box-sizing: border-box;
+  padding: 2px 47px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: none;
+  border-radius: 15px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 135.5%;
+  color: rgba(255, 0, 0, 0.76);
+
+  position: absolute;
+  cursor: pointer;
+  top: 89px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
+
+.avatar-shadow{
+  background-image: url("/img/character_shadow.png");
+  background-size: contain;
+  
+  width: 107px;
+  height: 10px;
+  margin-left: 50%;
+  transform: translate(-50%);
+}
