@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>test</title>
+  <title>Win</title>
   <link rel="stylesheet" href="/css/game-win.css" />
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="top">
       <img src="/img/coin.png" class="coin" />
       <img src="/img/money.png" class="money" />
-      <input type="image" id="image" alt="Login" src="/img/login.png" />
+      <input type="image" id="image" alt="Login" src="/img/character/character_0.png" />
     </div>
   </header>
 
@@ -35,8 +35,7 @@
   <div class="container--win">
     <p class="input--win">+10.000</p>
   </div>
-  <div class="button--spin"></div>
-  <button class="button--spin-iner">spin</button>
+  <button class="button--spin"></button>
 
   <footer>
     <div class="bottom-image-wrapper">
@@ -45,22 +44,4 @@
     </div>
   </footer>
 </body>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const spinButton = document.querySelector('.button--spin');
-    const spinInnerButton = document.querySelector('.button--spin-iner');
-
-    spinInnerButton.addEventListener('mousedown', () => {
-      spinButton.classList.add('active');
-    });
-
-    spinInnerButton.addEventListener('mouseup', () => {
-      spinButton.classList.remove('active');
-    });
-
-    spinInnerButton.addEventListener('mouseleave', () => {
-      spinButton.classList.remove('active');
-    });
-  });
-</script>
 </html>
