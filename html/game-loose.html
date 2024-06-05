@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test</title>
+  <link rel="stylesheet" href="/css/game-loose.css" />
+</head>
+<body>
+  <header>
+    <div class="top">
+      <img src="/img/coin.png" class="coin" />
+      <img src="/img/money.png" class="money" />
+      <input type="image" id="image" alt="Login" src="/img/login.png" />
+    </div>
+  </header>
+
+  <div class="cloud--bet">
+    <p class="current-bet">5</p>
+    <div class="container--button">
+      <button id="bett-less" class="button--less-bett">
+        <div class="button--less-bett-text">-</div>
+      </button>
+      <button id="bett-more" class="button--more-bett">
+        <div class="button--more-bett-text">+</div>
+      </button>
+      <button id="bett-max" class="button--max-bett">
+        <img src="/img/maxbet.png" alt="">
+        <div class="button--max-bett-text">max</div>
+      </button>
+    </div>
+  </div>
+
+  <img src="/img/cloud_loose.png" class="center-cloud" />
+  <div class="container--win">
+    <p class="input--win">+10.000</p>
+  </div>
+  <div class="button--spin"></div>
+  <button class="button--spin-iner">spin</button>
+
+  <footer>
+    <div class="bottom-image-wrapper">
+      <button class="coins--info"></button>
+      <img src="/img/nuage-background.png" class="bottom-image" />
+    </div>
+  </footer>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const spinButton = document.querySelector('.button--spin');
+    const spinInnerButton = document.querySelector('.button--spin-iner');
+
+    spinInnerButton.addEventListener('mousedown', () => {
+      spinButton.classList.add('active');
+    });
+
+    spinInnerButton.addEventListener('mouseup', () => {
+      spinButton.classList.remove('active');
+    });
+
+    spinInnerButton.addEventListener('mouseleave', () => {
+      spinButton.classList.remove('active');
+    });
+  });
+</script>
+</html>
