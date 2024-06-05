@@ -5,9 +5,11 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background-color: rgb(102, 208, 240);
+  background-image: url("/img/background_win.png");
+  background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
+  user-select: none;
 }
 
 header {
@@ -176,29 +178,29 @@ header {
 }
 
 .button--spin-iner {
-  z-index: 2 !important;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 15px 30px 25px 30px;
-  font-family: 'Bungee';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 48px;
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
-  position: absolute;
-  top: 62%;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.button--spin-iner:active {
-  top: 66%;
-}
+    z-index: 2 !important;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 15px 30px 25px 30px;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  .button--spin-iner:active {
+    top: 66%;
+  }
 
 footer {
   position: relative;
@@ -232,3 +234,39 @@ footer {
   padding: 0;
   cursor: pointer;
 }
+
+.container--win{
+    box-sizing: border-box;
+    width: 250px;
+    height: 60px;
+
+    position: absolute;
+    top: 43%;
+    right: 49%;
+    transform: translate(50%, -50%);
+
+    background: #655756;
+    border: 2px solid #341D1A;
+    box-shadow: inset 0px -7px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+}
+
+.container--win p{
+    margin-left: 10px;
+    margin-top: -13.5%;
+
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 115px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.05em;
+
+    color: #FFFFFF;
+
+    text-shadow: 10px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 0px rgba(0, 0, 0, 0.8);
+
+}
+
