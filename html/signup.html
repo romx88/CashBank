@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>test</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="/css/signup.css" />
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <div class="top">
-        <img src="/img/coin.png" class="coin" />
-        <img src="/img/money.png" class="money" />
-        <input type="image" id="image" alt="Login" src="/img/no-character.png" />
-      </div>
+        <div class="top">
+            <img src="/img/coin.png" class="coin" />
+            <img src="/img/money.png" class="money" />
+            <input type="image" id="image" alt="Login" src="/img/no-character.png" />
+        </div>
     </header>
 
     <div class="content">
@@ -21,49 +21,80 @@
             <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
             <button id="button--coins-right" class="button--coins" onclick="After()"></button>
         </div>
-        <form action="" class="signup-form">
+        <form class="signup-form" onsubmit="register(event)">
             <div class="input-container">
                 <img src="/img/icon/user.png" alt="" class="icon--pseudo">
-                <input required class="input--pseudo" type="text" placeholder="username">
-              </div>
-            <div class="input-container">
-                <img src="/img/icon/password.png" alt="" class="icon--password">
-                <input required class="input--password" type="password" placeholder="password">
+                <input required id="signup-pseudo" class="input--pseudo" type="text" placeholder="username">
             </div>
             <div class="input-container">
                 <img src="/img/icon/password.png" alt="" class="icon--password">
-                <input required class="input--password" type="password" placeholder="password">
+                <input required id="signup-password" class="input--password" type="password" placeholder="password">
             </div>
+            <div class="input-container">
+                <img src="/img/icon/password.png" alt="" class="icon--password">
+                <input required id="signup-password-retype" class="input--password" type="password" placeholder="retype password">
+            </div>
+            <button type="submit" class="signup">Sign up</button>
         </form>
-        <p class="message" >Already have an account? <a href="/login">Login</a></p>
-        <button class="signup">sign up</button>
+        <p class="message">Already have an account? <a href="/login.html">Login</a></p>
     </div>
 
     <footer>
-      <img src="/img/nuage-background.png" class="bottom-image" />
+        <img src="/img/nuage-background.png" class="bottom-image" />
     </footer>
-  </body>
 
-  <script>
-    function Before() {
-        let characterImg = document.getElementById("character").src
-        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+    <script>
+        function Before() {
+            let characterImg = document.getElementById("character").src;
+            let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
 
-        if (nbCharacter != 0) {
-            console.log(nbCharacter)
-            nbCharacter-- 
-            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+            if (nbCharacter != 0) {
+                nbCharacter--;
+                document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+            }
         }
-    }
 
-    function After() {
-        let characterImg = document.getElementById("character").src
-        let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+        function After() {
+            let characterImg = document.getElementById("character").src;
+            let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
 
-        if (nbCharacter != 1) {
-            nbCharacter++
-            document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+            if (nbCharacter != 1) {
+                nbCharacter++;
+                document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
+            }
         }
-    }
-  </script>
+
+        function register(event) {
+            event.preventDefault();
+            const pseudo = document.getElementById('signup-pseudo').value;
+            const password = document.getElementById('signup-password').value;
+            const passwordRetype = document.getElementById('signup-password-retype').value;
+            const character = document.getElementById('character').src.split('/').pop(); // Get character image name
+
+            if (password !== passwordRetype) {
+                alert("Passwords don't match. Retype your Password.");
+                return;
+            }
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pseudo, password, character }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'User registered successfully!') {
+                    window.location.href = '/game.html';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
 </html>
