@@ -247,3 +247,28 @@ footer {
 
 }
 
+.coins--info-dropdown {
+  position: absolute;
+  top: -25px;
+  right: 4.5%;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  display: none;
+}
+
+.coins--info-dropdown a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+}
+
+.coins--info-dropdown a:hover {
+  background-color: #f1f1f1;
+}
+
+.coins--info:hover + .coins--info-dropdown {
+  display: block;
+}
+
