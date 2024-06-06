@@ -32,12 +32,8 @@ app.get('/game.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/game.html'));
 });
 
-app.get('/game-loose.html', (req, res) => {
-res.sendFile(path.join(__dirname, '../html/game-loose.html'));
-});
-
-app.get('/game-win.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../html/game-win.html'));
+app.get('/plinko.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/plinko.html'));
 });
 
 app.get('/buy.html', (req, res) => {

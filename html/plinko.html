@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plinko</title>
+  <link rel="stylesheet" href="/css/game.css" />
+  <link rel="stylesheet" href="/css/global/footer-game.css" />
+  <link rel="stylesheet" href="/css/global/navbar.css" />
+  <link rel="stylesheet" href="/css/plinko.css" />  
+</head>
+<body>
+  <header>
+    <div class="top">
+      <a href="/">
+        <img src="/img/coin.png" class="coin" />
+      </a>
+      <a href="/buy.html">
+        <div id="money" class="money">
+          <p id="coin" class="coins"></p>
+        </div>
+      </a>
+      
+      <a href="/profile.html">
+        <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
+      </a>
+    </div>
+  </header>
+
+  <div class="cloud--bet">
+    <p class="current-bet">5</p>
+    <div class="container--button">
+      <button id="bett-less" class="button--less-bett">
+        <div class="button--less-bett-text">-</div>
+      </button>
+      <button id="bett-more" class="button--more-bett">
+        <div class="button--more-bett-text">+</div>
+      </button>
+      <button id="bett-max" class="button--max-bett">
+        <img src="/img/maxbet.png" alt="">
+        <div class="button--max-bett-text">max</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="center-cloud">
+    <div id="game">
+        <div id="board">
+            <div id="left-barrier"></div>
+            <div id="inner-board"></div>
+            <div id="right-barrier"></div>
+        </div>
+        <div id="multipliers">
+            <div class="multiplier">0.5</div>
+            <div class="multiplier">2</div>
+            <div class="multiplier">5</div>
+            <div class="multiplier">10</div>
+            <div class="multiplier">5</div>
+            <div class="multiplier">2</div>
+            <div class="multiplier">0.5</div>
+        </div>
+    </div>
+
+    <div class="buttons">
+      <button class="button--spin" id="launch-button"></button>
+    </div>
+  </div>
+    
+  <footer>
+    <div class="bottom-image-wrapper">
+      <button class="coins--info"></button>
+      <img src="/img/nuage-background.png" class="bottom-image" />
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImage = localStorage.getItem('profilePicture');
+      const pseudo = localStorage.getItem('pseudo');
+      updateCoinDisplay(pseudo);
+      if (profileImage) {
+        document.getElementById('profile-image').src = profileImage;
+      }
+    });
+
+    async function getBalance(pseudo) {
+      const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+      const data = await response.json();
+      console.log("Fetched balance:", data.coins);
+      return data.coins;
+    }
+
+    async function updateBalance(pseudo, newBalance) {
+      newBalance = roundToHalf(newBalance);
+      const response = await fetch('/api/updateCoins', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pseudo, coins: newBalance })
+      });
+      const result = await response.json();
+      console.log("Updated balance:", result);
+      updateCoinDisplay(pseudo);
+    }
+
+    async function updateCoinDisplay(pseudo) {
+      const balance = await getBalance(pseudo);
+      document.getElementById('coin').textContent = balance;
+    }
+
+    function roundToHalf(num) {
+      return Math.floor(num * 2) / 2;
+    }
+
+    let score = 0;
+    let money = 0; 
+    let currentBet = 5;
+    const gravity = 0.1;
+    const damping = 0.7;
+    const ballRadius = 5;
+
+    document.getElementById('launch-button').addEventListener('click', async () => {
+      const pseudo = localStorage.getItem('pseudo');
+      let balance = await getBalance(pseudo);
+      if (balance >= currentBet) {
+        balance -= currentBet;
+        await updateBalance(pseudo, balance);
+        launchBall(currentBet);
+      } else {
+        alert("Not enough balance!");
+      }
+    });
+
+    document.getElementById('bett-less').addEventListener('click', () => adjustBet(-1));
+    document.getElementById('bett-more').addEventListener('click', () => adjustBet(1));
+    document.getElementById('bett-max').addEventListener('click', setMaxBet);
+
+    function launchBall(betValue) {
+        const ball = document.createElement('div');
+        ball.id = 'ball';
+        ball.style.left = '145px';
+        ball.style.top = '0px';
+        document.getElementById('board').appendChild(ball);
+
+        let x = 145; 
+        let y = 0;
+        let vx = (Math.random() - 0.5) * 4;
+        let vy = 0;
+
+        const interval = setInterval(() => {
+            vy += gravity;
+            x += vx;
+            y += vy;
+
+            if (x - ballRadius <= 0 || x + ballRadius >= 280) {
+                vx = -vx;
+            }
+
+            const pegs = document.getElementsByClassName('peg');
+            for (let i = 0; i < pegs.length; i++) {
+                const peg = pegs[i];
+                const pegRect = peg.getBoundingClientRect();
+                const ballRect = ball.getBoundingClientRect();
+
+                const dx = (ballRect.left + ballRadius) - (pegRect.left + pegRect.width / 2);
+                const dy = (ballRect.top + ballRadius) - (pegRect.top + pegRect.height / 2);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < ballRadius + pegRect.width / 2) {
+                    const angle = Math.atan2(dy, dx);
+                    vx = Math.cos(angle) * damping;
+                    vy = Math.sin(angle) * damping;
+                }
+            }
+
+            if (y >= 360) {
+                clearInterval(interval);
+                checkMultiplier(x, betValue);
+                ball.remove();
+            } else {
+                ball.style.left = `${x}px`;
+                ball.style.top = `${y}px`;
+            }
+        }, 20);
+    }
+
+    async function checkMultiplier(x, betValue) {
+        const multipliers = document.getElementsByClassName('multiplier');
+        const index = Math.floor(x / 40);
+        const multiplier = parseFloat(multipliers[index].innerText);
+        const winValue = betValue * multiplier;
+
+        const pseudo = localStorage.getItem('pseudo');
+        let balance = await getBalance(pseudo);
+        balance += winValue;
+        await updateBalance(pseudo, balance);
+
+        score += multiplier;
+        document.getElementById('score').innerText = `Score: ${score.toFixed(2)}`;
+        document.getElementById('money').innerText = `Argent: ${balance.toFixed(2)}`;
+    }
+
+    function adjustBet(change) {
+        currentBet = Math.max(1, currentBet + change);
+        document.querySelector('.current-bet').textContent = currentBet;
+    }
+
+    async function setMaxBet() {
+        const pseudo = localStorage.getItem('pseudo');
+        const balance = await getBalance(pseudo);
+        currentBet = balance;
+        document.querySelector('.current-bet').textContent = balance;
+    }
+
+    const board = document.getElementById('board');
+    const pegOffset = 30;
+    const initialOffset = (board.clientWidth - 3 * pegOffset) / 2;
+
+    for (let i = 1; i < 8; i++) {
+        for (let j = 0; j < i + 2; j++) {
+            const peg = document.createElement('div');
+            peg.className = 'peg';
+            const offset = (board.clientWidth - (i + 2) * pegOffset) / 2 + 5;
+            peg.style.left = `${offset + j * pegOffset}px`;
+            peg.style.top = `${i * 40 + 20}px`;
+            board.appendChild(peg);
+        }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-color: rgb(102, 208, 240);
+  background-repeat: no-repeat;
+  overflow: hidden;
+  user-select: none;
+}
+
+.cloud--bet {
+  position: absolute;
+  margin-top: 7%;
+  background-image: url("/img/betcloud.png");
+  background-size: contain;
+  height: 200px;
+  width: 185.5px;
+}
+
+.current-bet {
+  position: relative;
+  top: 14%;
+  left: 40%;
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25), 0px 4px 0px rgba(0, 0, 0, 0.8);
+}
+
+.button--less-bett {
+  z-index: 6;
+  margin-top: 45%;
+  margin-left: 60%;
+  width: 37.56px;
+  height: 39.16px;
+  background: #F4F4F4;
+  cursor: pointer;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 18px;
+  border: none;
+  transform: rotate(90deg);
+}
+
+.button--less-bett-text {
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+  transform: rotate(-90deg);
+  margin-top: -3px;
+}
+
+.button--more-bett {
+  z-index: 2;
+  position: absolute;
+  top: 80%;
+  left: 100%;
+  width: 37.56px;
+  height: 39.16px;
+  background: #F4F4F4;
+  cursor: pointer;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 18px;
+  border: none;
+  transform: rotate(90deg);
+}
+
+.button--more-bett-text {
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+  transform: rotate(-90deg);
+  margin-top: -3px;
+}
+
+.button--max-bett {
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+
+.button--max-bett-text {
+  margin-top: -50%;
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 23px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+}
+
+.button--spin {
+  cursor: pointer;
+  position: absolute;
+  top: 65%;
+  transform: translate(-50%);
+  left: 50%;
+  border: none;
+  background: none;
+  background-image: url("/img/button/spin.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+.button--spin:active {
+  background-image: url("/img/button/spin_pressed.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+#game {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#launch-button {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#board {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    background-color: lightblue;
+    border: 2px solid #000;
+    overflow: hidden;
+}
+
+.peg {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+}
+
+#ball {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+}
+
+#multipliers {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-top: 10px;
+}
+
+.multiplier {
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    font-size: 16px;
+}
+
+#score {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#money {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#increase-money {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#left-barrier,
+#right-barrier {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 400px;
+    background-color: transparent;
+}
+
+#left-barrier {
+    left: 0;
+}
+
+#right-barrier {
+    right: 0;
+}
