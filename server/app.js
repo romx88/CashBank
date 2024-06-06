@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 8080;
@@ -58,58 +59,48 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
   }
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { pseudo, password, character } = req.body;
 
-  db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
-    [pseudo, password, character],
-    function (err) {
-      if (err) {
-        res.status(500).json({ message: 'Failed to register user.' });
-      } else {
-        db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
-          res.status(500).json({ message: 'User registered successfully!', character: row.character });
-        });
-      }
-    });
-});
- 
+  if (password.length < 8) {
+    return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+  }
 
-  app.post('/login', (req, res) => {
-    const { pseudo, password } = req.body;
-  
-    db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
-      if (err) {
-        res.status(500).json({ message: 'Error logging in.' });
-      } else if (!row) {
-        res.status(400).json({ message: 'Invalid username or password.' });
-      } else {
-        res.status(200).json({ message: 'Login successful!', character: row.character });
-      }
-    });
-  });
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  app.get('/api/getCoins', (req, res) => {
-    const { pseudo } = req.query;
-    db.get(`SELECT coin FROM users WHERE pseudo = ?`, [pseudo], (err, row) => {
-      if (err) {
-        res.status(500).json({ message: 'Error retrieving coins.' });
-      } else {
-        res.status(200).json({ coins: row ? row.coin : 0 });
-      }
-    });
-  });
-
-  app.post('/api/delete', (req, res) => {
-    const { pseudo } = req.body;
-
-    db.run(`DELETE FROM users WHERE pseudo = ?`, [pseudo], (err) => {
+    db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
+      [pseudo, hashedPassword, character],
+      function (err) {
         if (err) {
-            res.status(500).json({ message: 'Error deleting account.' });
+          res.status(500).json({ message: 'Failed to register user.' });
         } else {
-            res.status(200).json({ message: 'Account successfully deleted.' });
+          db.get(`SELECT * FROM users WHERE pseudo = ?`, [pseudo], (err, row) => {
+            if (err) {
+              res.status(500).json({ message: 'Error retrieving user.' });
+            } else {
+              res.status(200).json({ message: 'User registered successfully!', character: row.character });
+            }
+          });
         }
-    });
+      });
+  } catch (err) {
+    res.status(500).json({ message: 'Error hashing password.' });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { pseudo, password } = req.body;
+
+  db.get(`SELECT * FROM users WHERE pseudo = ?`, [pseudo], async (err, row) => {
+    if (err) {
+      res.status(500).json({ message: 'Error logging in.' });
+    } else if (!row || !(await bcrypt.compare(password, row.password))) {
+      res.status(400).json({ message: 'Invalid username or password.' });
+    } else {
+      res.status(200).json({ message: 'Login successful!', character: row.character });
+    }
+  });
 });
 
 app.get('/api/getCoins', (req, res) => {
@@ -119,6 +110,18 @@ app.get('/api/getCoins', (req, res) => {
       res.status(500).json({ message: 'Error retrieving coins.' });
     } else {
       res.status(200).json({ coins: row ? row.coin : 0 });
+    }
+  });
+});
+
+app.post('/api/delete', (req, res) => {
+  const { pseudo } = req.body;
+
+  db.run(`DELETE FROM users WHERE pseudo = ?`, [pseudo], (err) => {
+    if (err) {
+      res.status(500).json({ message: 'Error deleting account.' });
+    } else {
+      res.status(200).json({ message: 'Account successfully deleted.' });
     }
   });
 });
