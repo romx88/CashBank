@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Game</title>
   <link rel="stylesheet" href="/css/game.css" />
+  <link rel="stylesheet" href="/css/machine.css" />
 </head>
 <body>
   <header>
@@ -12,13 +13,13 @@
       <a href="/">
         <img src="/img/coin.png" class="coin" />
       </a>
-      <img src="/img/money.png" class="money" />
+      <img src="/img/money.png" class="money" id="money" />
       <input type="image" id="profile-image" alt="Profile" src="" class="profile-image" />
     </div>
   </header>
 
   <div class="cloud--bet">
-    <p class="current-bet">5</p>
+    <p class="current-bet">0</p>
     <div class="container--button">
       <button id="bett-less" class="button--less-bett">
         <div class="button--less-bett-text">-</div>
@@ -33,9 +34,27 @@
     </div>
   </div>
 
-  <img src="/img/clouddetail.png" class="center-cloud" />
-  <button class="button--spin"></button>
+  <div class="center-cloud">
+    <div id="app">
+      <div class="doors">
+        <div class="door">
+          <div class="boxes"></div>
+        </div>
+        <div class="door">
+          <div class="boxes"></div>
+        </div>
+        <div class="door">
+          <div class="boxes"></div>
+        </div>
+      </div>
+      <p class="info"></p>
+    </div>
 
+    <div class="buttons">
+      <button class="button--spin" id="spinner"></button>
+    </div>
+  </div>
+    
   <footer>
     <div class="bottom-image-wrapper">
       <button class="coins--info"></button>
@@ -48,6 +67,177 @@
       const profileImage = localStorage.getItem('profilePicture');
       if (profileImage) {
         document.getElementById('profile-image').src = profileImage;
+      }
+
+      const pseudo = localStorage.getItem('pseudo');
+      updateCoinDisplay(pseudo);
+
+      (function () {
+        "use strict";
+
+        const items = [
+          "7️⃣",
+          "❌",
+          "🍓",
+          "🍋",
+          "🍉",
+          "🍒",
+          "💵",
+          "🍊",
+          "🍎"
+        ];
+        document.querySelector(".info").textContent = items.join(" ");
+
+        const doors = document.querySelectorAll(".door");
+        document.querySelector("#spinner").addEventListener("click", async () => {
+          console.log("Spinner clicked");
+          let balance = await getBalance(pseudo);
+          console.log("Current balance:", balance);
+          const betAmount = parseInt(document.querySelector('.current-bet').textContent);
+          console.log("Bet amount:", betAmount);
+
+          if (balance >= betAmount) {
+            balance -= betAmount;
+            console.log("New balance after bet:", balance);
+            await updateBalance(pseudo, balance);
+            await spin();
+            const result = checkJackpot();
+            if (result) {
+              balance += betAmount * 2;
+              await updateBalance(pseudo, balance);
+              window.location.href = '/game-win.html';
+            } else {
+              window.location.href = '/game-loose.html';
+            }
+          } else {
+            alert("Not enough balance!");
+          }
+        });
+
+        document.getElementById('bett-less').addEventListener('click', () => adjustBet(-1));
+        document.getElementById('bett-more').addEventListener('click', () => adjustBet(1));
+        document.getElementById('bett-max').addEventListener('click', setMaxBet);
+
+        async function spin() {
+          for (let i = 0; i < 3; i++) {
+            init(false, 1, 2);
+            for (const door of doors) {
+              const boxes = door.querySelector(".boxes");
+              const duration = parseInt(boxes.style.transitionDuration);
+              boxes.style.transform = "translateY(0)";
+              await new Promise((resolve) => setTimeout(resolve, duration * 100));
+            }
+          }
+        }
+
+        function checkJackpot() {
+          const results = Array.from(doors).map(door => door.querySelector('.box').textContent);
+          return results.every(result => result === results[0]);
+        }
+
+        function init(firstInit = true, groups = 1, duration = 1) {
+          for (const door of doors) {
+            if (firstInit) {
+              door.dataset.spinned = "0";
+            } else if (door.dataset.spinned === "1") {
+              return;
+            }
+
+            const boxes = door.querySelector(".boxes");
+            const boxesClone = boxes.cloneNode(false);
+
+            const pool = ["❓"];
+            if (!firstInit) {
+              const arr = [];
+              for (let n = 0; n < (groups > 0 ? groups : 1); n++) {
+                arr.push(...items);
+              }
+              pool.push(...shuffle(arr));
+
+              boxesClone.addEventListener(
+                "transitionstart",
+                function () {
+                  door.dataset.spinned = "1";
+                  this.querySelectorAll(".box").forEach((box) => {
+                    box.style.filter = "blur(1px)";
+                  });
+                },
+                { once: true }
+              );
+
+              boxesClone.addEventListener(
+                "transitionend",
+                function () {
+                  this.querySelectorAll(".box").forEach((box, index) => {
+                    box.style.filter = "blur(0)";
+                    if (index > 0) this.removeChild(box);
+                  });
+                },
+                { once: true }
+              );
+            }
+
+            for (let i = pool.length - 1; i >= 0; i--) {
+              const box = document.createElement("div");
+              box.classList.add("box");
+              box.style.width = door.clientWidth + "px";
+              box.style.height = door.clientHeight + "px";
+              box.textContent = pool[i];
+              boxesClone.appendChild(box);
+            }
+            boxesClone.style.transitionDuration = `${duration > 0 ? duration : 1}s`;
+            boxesClone.style.transform = `translateY(-${
+              door.clientHeight * (pool.length - 1)
+            }px)`;
+            door.replaceChild(boxesClone, boxes);
+          }
+        }
+
+        function shuffle([...arr]) {
+          let m = arr.length;
+          while (m) {
+            const i = Math.floor(Math.random() * m--);
+            [arr[m], arr[i]] = [arr[i], arr[m]];
+          }
+          return arr;
+        }
+
+        function adjustBet(change) {
+          const betElement = document.querySelector('.current-bet');
+          let betAmount = parseInt(betElement.textContent);
+          betAmount = Math.max(1, betAmount + change);
+          betElement.textContent = betAmount;
+        }
+
+        async function setMaxBet() {
+          const balance = await getBalance(pseudo);
+          document.querySelector('.current-bet').textContent = balance;
+        }
+
+        init();
+      })();
+      
+      async function getBalance(pseudo) {
+        const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+        const data = await response.json();
+        console.log("Fetched balance:", data.coins);
+        return data.coins;
+      }
+
+      async function updateBalance(pseudo, newBalance) {
+        const response = await fetch('/api/updateCoins', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pseudo, coins: newBalance })
+        });
+        const result = await response.json();
+        console.log("Updated balance:", result);
+        updateCoinDisplay(pseudo);
+      }
+
+      async function updateCoinDisplay(pseudo) {
+        const balance = await getBalance(pseudo);
+        document.getElementById('money').textContent = balance;
       }
     });
   </script>

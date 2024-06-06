@@ -28,6 +28,14 @@ app.get('/game.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/game.html'));
 });
 
+app.get('/game-loose.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/game-loose.html'));
+});
+
+app.get('/game-win.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../html/game-win.html'));
+  });
+
 // Database setup
 const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) => {
   if (err) {
@@ -38,7 +46,7 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pseudo TEXT,
             password TEXT,
-            coin INTEGER DEFAULT 0,
+            coin INTEGER DEFAULT 100,
             profil_picture TEXT,
             cookie TEXT,
             character TEXT
@@ -60,20 +68,42 @@ app.post('/register', (req, res) => {
       });
   });  
 
-  app.post('/login', (req, res) => {
-    const { pseudo, password } = req.body;
-  
-    db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
+app.post('/login', (req, res) => {
+  const { pseudo, password } = req.body;
+
+  db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
+    if (err) {
+      res.status(500).json({ message: 'Error logging in.' });
+    } else if (!row) {
+      res.status(400).json({ message: 'Invalid username or password.' });
+    } else {
+      res.status(200).json({ message: 'Login successful!', character: row.character, coins: row.coin });
+    }
+  });
+});
+
+app.get('/api/getCoins', (req, res) => {
+    const { pseudo } = req.query;
+    db.get(`SELECT coin FROM users WHERE pseudo = ?`, [pseudo], (err, row) => {
       if (err) {
-        res.status(500).json({ message: 'Error logging in.' });
-      } else if (!row) {
-        res.status(400).json({ message: 'Invalid username or password.' });
+        res.status(500).json({ message: 'Error retrieving coins.' });
       } else {
-        res.status(200).json({ message: 'Login successful!', character: row.character });
+        res.status(200).json({ coins: row ? row.coin : 0 });
       }
     });
-  });  
-
+  });
+  
+  app.post('/api/updateCoins', (req, res) => {
+    const { pseudo, coins } = req.body;
+    db.run(`UPDATE users SET coin = ? WHERE pseudo = ?`, [coins, pseudo], function (err) {
+      if (err) {
+        res.status(500).json({ message: 'Error updating coins.' });
+      } else {
+        res.status(200).json({ message: 'Coins updated successfully!' });
+      }
+    });
+  });
+  
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

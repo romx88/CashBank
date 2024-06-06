@@ -50,6 +50,7 @@
           .then(response => response.json())
           .then(data => {
               if (data.message === 'Login successful!') {
+                  localStorage.setItem('pseudo', pseudo);
                   localStorage.setItem('profilePicture', `/img/character/${data.character}`);
                   window.location.href = '/game.html';
               } else {
@@ -60,6 +61,7 @@
               console.error('Error:', error);
           });
       }
-  </script>  
+  </script>
+  
 </body>
 </html>

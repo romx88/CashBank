@@ -11,7 +11,7 @@
     <div class="top">
       <img src="/img/coin.png" class="coin" />
       <img src="/img/money.png" class="money" />
-      <input type="image" id="image" alt="Login" src="/img/character/character_0.png" />
+      <input type="image" id="profile-image" alt="Profile" src="" class="profile-image" />
     </div>
   </header>
 
@@ -33,9 +33,11 @@
 
   <img src="/img/cloud_loose.png" class="center-cloud" />
   <div class="container--win">
-    <p class="input--win">+10.000</p>
+    <p class="input--win">-10.000</p>
   </div>
-  <button class="button--spin"></button>
+  <a href="/game.html">
+    <button class="button--spin"></button>
+  </a>
 
   <footer>
     <div class="bottom-image-wrapper">
@@ -43,5 +45,13 @@
       <img src="/img/nuage-background.png" class="bottom-image" />
     </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImage = localStorage.getItem('profilePicture');
+      if (profileImage) {
+        document.getElementById('profile-image').src = profileImage;
+      }
+    });
+  </script>
 </body>
 </html>

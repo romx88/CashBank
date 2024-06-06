@@ -86,6 +86,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.message === 'User registered successfully!') {
+                localStorage.setItem('pseudo', pseudo);
                 localStorage.setItem('profilePicture', `/img/character/${data.character}`);
                 window.location.href = '/game.html';
             } else {
