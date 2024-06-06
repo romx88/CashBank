@@ -3,20 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>test</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer.css" />
   </head>
   <body>
     <header>
       <div class="top">
-        <img src="/img/coin.png" class="coin" />
-        <img src="/img/money.png" class="money" />
-        <input type="image" id="image" alt="Login" src="/img/no-character.png" />
+        <a href="/">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <a href="/buy.html">
+          <img src="/img/money.png" class="money" />
+        </a>
+        <a href="/profile.html">
+          <img class="profile-image" id="profile-image" alt="Login" src="" />
+        </a>
       </div>
     </header>
 
     <div class="content">
-      <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
+      <img id="character" src="" alt="avatar img" class="avatar">
       <div class="avatar-shadow"></div>
       <div class="horizontal-bar"></div>
       <div class="container--account">
@@ -31,5 +39,15 @@
     <footer>
       <img src="/img/nuages-background.png" class="bottom-image" />
     </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const profileImage = localStorage.getItem('profilePicture');
+        if (profileImage) {
+          document.getElementById('profile-image').src = profileImage;
+          document.getElementById('character').src = profileImage;
+        }
+      });
+    </script>
   </body>
 </html>

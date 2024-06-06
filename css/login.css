@@ -7,6 +7,7 @@ body {
     margin: 0;
     background-color: rgb(102, 208, 240);
     background-repeat: no-repeat;
+    user-select: none;
 }
   
 header {
@@ -56,10 +57,10 @@ header {
 .content{
     background-image: url("/img/login-card.png");
     background-size: contain; 
-    width: 471px;
+    width: 469.5px;
     height: 258.1px;
     position: absolute;
-    top: 18%;
+    margin-top: 110px;
     left: 50%;
     transform: translate(-50%);
 }
@@ -118,9 +119,10 @@ header {
 }
 
 .login-form{
+    width: fit-content;
     margin-top: 13%;
     margin-left: 50%;
-    transform: translate(-60%);
+    transform: translate(-50%);
 }
 
 .input-container {
@@ -147,7 +149,7 @@ header {
 
 .login{
     box-sizing: border-box;
-    padding: 2px 15px;
+    padding: 2px 5px;
     background: #FEFEFF;
     border: 2px solid #341D1A;
     box-shadow: 0px 9px 0px #515795;
@@ -167,27 +169,12 @@ header {
 }
 
 .login:active{
-    box-sizing: border-box;
-    padding: 2px 15px;
-    background: #FEFEFF;
-    border: 2px solid #341D1A;
     box-shadow: none;
-    border-radius: 15px;
-
-    font-family: 'Bungee';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 135.5%;
-    color: rgba(0, 0, 0, 0.686);
-    
-    cursor: pointer;
     margin-top: 14px;
-    margin-left: 50%;
-    transform: translate(-50%);
 }
 
 .message {
+    width: 67%;
     font-family: 'Bungee';
     font-style: normal;
     font-weight: 400;
@@ -197,7 +184,7 @@ header {
     
     margin-top: 10px;
     margin-left: 50%;
-    transform: translate(-40%);
+    transform: translate(-50%);
 }
 
 .message a {

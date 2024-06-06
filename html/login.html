@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="/css/login.css" />
-</head>
-<body>
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer.css" />
+  </head>
+  <body>
     <header>
-        <div class="top">
-            <img src="/img/coin.png" class="coin" />
-            <img src="/img/money.png" class="money" />
-            <input type="image" id="image" alt="Login" src="/img/no-character.png" />
-        </div>
+      <div class="top">
+        <a href="/">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <a href="/buy.html">
+          <img src="/img/money.png" class="money" />
+        </a>
+        <a href="/profile.html">
+          <img class="profile-image" alt="Login" src="/img/no-character.png" />
+        </a>
+      </div>
     </header>
 
     <div class="content">
-        <form class="login-form" onsubmit="login(event)">
+        <form action="" class="login-form">
             <div class="input-container">
                 <img src="/img/icon/user.png" alt="" class="icon--pseudo">
-                <input required id="login-pseudo" class="input--pseudo" type="text" placeholder="username">
-            </div>
+                <input required class="input--pseudo" type="text" placeholder="username">
+              </div>
             <div class="input-container">
                 <img src="/img/icon/password.png" alt="" class="icon--password">
-                <input required id="login-password" class="input--password" type="password" placeholder="password">
+                <input required class="input--password" type="password" placeholder="password">
             </div>
+            <p class="message" >Don't have an account? <a href="/signup.html">Sign Up</a></p>
             <button type="submit" class="login">Log in</button>
-          </form>
-        <p class="message">Don't have an account? <a href="/signup.html">Sign Up</a></p>
+        </form>
     </div>
 
     <footer>
-        <img src="/img/nuage-background.png" class="bottom-image" />
+      <img src="/img/nuage-background.png" class="bottom-image" />
     </footer>
 
     <script>
@@ -50,6 +58,7 @@
           .then(response => response.json())
           .then(data => {
               if (data.message === 'Login successful!') {
+                  localStorage.setItem('pseudo', pseudo);
                   localStorage.setItem('profilePicture', `/img/character/${data.character}`);
                   window.location.href = '/game.html';
               } else {
@@ -60,6 +69,6 @@
               console.error('Error:', error);
           });
       }
-  </script>  
-</body>
+    </script>
+  </body>
 </html>

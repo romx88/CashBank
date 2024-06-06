@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
     <link rel="stylesheet" href="/css/signup.css" />
-</head>
-<body>
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer.css" />
+
+  </head>
+  <body>
     <header>
-        <div class="top">
-            <img src="/img/coin.png" class="coin" />
-            <img src="/img/money.png" class="money" />
-            <input type="image" id="image" alt="Login" src="/img/no-character.png" />
-        </div>
+      <div class="top">
+        <a href="/">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <a href="/buy.html">
+          <img src="/img/money.png" class="money" />
+        </a>
+        <a href="/profile.html">
+          <img class="profile-image" alt="Login" src="/img/no-character.png" />
+        </a>
+      </div>
     </header>
 
     <div class="content">
         <div class="avatar-selection">
             <button id="button--coins-left" class="button--coins" onclick="Before()"></button>
-            <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
+            <img id="character" src="/img/character/character_1.png" alt="avatar img" class="avatar">
             <button id="button--coins-right" class="button--coins" onclick="After()"></button>
         </div>
         <form class="signup-form" onsubmit="register(event)">
             <div class="input-container">
                 <img src="/img/icon/user.png" alt="" class="icon--pseudo">
                 <input required id="signup-pseudo" class="input--pseudo" type="text" placeholder="username">
-            </div>
+              </div>
             <div class="input-container">
                 <img src="/img/icon/password.png" alt="" class="icon--password">
                 <input required id="signup-password" class="input--password" type="password" placeholder="password">
@@ -34,68 +43,70 @@
                 <img src="/img/icon/password.png" alt="" class="icon--password">
                 <input required id="signup-password-retype" class="input--password" type="password" placeholder="retype password">
             </div>
+            <p class="message">Already have an account? <a href="/login.html">Login</a></p>
             <button type="submit" class="signup">Sign up</button>
         </form>
-        <p class="message">Already have an account? <a href="/login.html">Login</a></p>
     </div>
 
     <footer>
-        <img src="/img/nuage-background.png" class="bottom-image" />
+      <img src="/img/nuage-background.png" class="bottom-image" />
     </footer>
 
     <script>
-        function Before() {
-            let characterImg = document.getElementById("character").src;
-            let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+      let currentCharacter = 0;
 
-            if (nbCharacter != 0) {
-                nbCharacter--;
-                document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
-            }
-        }
+      function Before() {
+          if (currentCharacter > 1) {
+              currentCharacter--;
+              document.getElementById("character").src = `/img/character/character_${currentCharacter}.png`;
+          }else{
+            currentCharacter = 11;
+            document.getElementById("character").src = `/img/character/character_${currentCharacter}.png`;
+          }
+      }
 
-        function After() {
-            let characterImg = document.getElementById("character").src;
-            let nbCharacter = parseInt(characterImg.split("_")[1].split(".")[0]);
+      function After() {
+          if (currentCharacter < 11) {
+              currentCharacter++;
+              document.getElementById("character").src = `/img/character/character_${currentCharacter}.png`;
+          }else{
+            currentCharacter = 1;
+            document.getElementById("character").src = `/img/character/character_${currentCharacter}.png`;
+          }
+      }
 
-            if (nbCharacter != 1) {
-                nbCharacter++;
-                document.getElementById("character").src = "/img/character/character_" + nbCharacter + ".png";
-            }
-        }
+      function register(event) {
+          event.preventDefault();
+          const pseudo = document.getElementById('signup-pseudo').value;
+          const password = document.getElementById('signup-password').value;
+          const passwordRetype = document.getElementById('signup-password-retype').value;
 
-        function register(event) {
-        event.preventDefault();
-        const pseudo = document.getElementById('signup-pseudo').value;
-        const password = document.getElementById('signup-password').value;
-        const passwordRetype = document.getElementById('signup-password-retype').value;
-        const character = document.getElementById('character').src.split('/').pop();
+          if (password !== passwordRetype) {
+              alert("Passwords don't match. Retype your Password.");
+              return;
+          }
 
-        if (password !== passwordRetype) {
-            alert("Passwords don't match. Retype your Password.");
-            return;
-        }
+          const character = `character_${currentCharacter}.png`;
 
-        fetch('/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ pseudo, password, character }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'User registered successfully!') {
-                localStorage.setItem('profilePicture', `/img/character/${data.character}`);
-                window.location.href = '/game.html';
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+          fetch('/register', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ pseudo, password, character }),
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.message === 'User registered successfully!') {
+                  window.location.href = '/game.html';
+              } else {
+                  alert(data.message);
+              }
+          })
+          .catch((error) => {
+              console.error('Error:', error);
+          });
+      }
     </script>
-</body>
+  </body>
 </html>

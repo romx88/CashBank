@@ -5,31 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Win</title>
   <link rel="stylesheet" href="/css/game-win.css" />
+  <link rel="stylesheet" href="/css/global/navbar.css" />
+  <link rel="stylesheet" href="/css/global/footer-game.css" />
 </head>
 <body>
   <header>
     <div class="top">
-      <img src="/img/coin.png" class="coin" />
-      <img src="/img/money.png" class="money" />
-      <input type="image" id="image" alt="Login" src="/img/character/character_0.png" />
+      <a href="/">
+        <img src="/img/coin.png" class="coin" />
+      </a>
+      <a href="/buy.html">
+        <img src="/img/money.png" class="money" />
+      </a>
+      <a href="/profile.html">
+        <img class="profile-image" id="profile-image" alt="Login" src="" />
+      </a>
     </div>
   </header>
-
-  <div class="cloud--bet">
-    <p class="current-bet">5</p>
-    <div class="container--button">
-      <button id="bett-less" class="button--less-bett">
-        <div class="button--less-bett-text">-</div>
-      </button>
-      <button id="bett-more" class="button--more-bett">
-        <div class="button--more-bett-text">+</div>
-      </button>
-      <button id="bett-max" class="button--max-bett">
-        <img src="/img/maxbet.png" alt="">
-        <div class="button--max-bett-text">max</div>
-      </button>
-    </div>
-  </div>
 
   <img src="/img/cloud_win.png" class="center-cloud" />
   <div class="container--win">
@@ -43,5 +35,14 @@
       <img src="/img/nuage-background.png" class="bottom-image" />
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImage = localStorage.getItem('profilePicture');
+      if (profileImage) {
+        document.getElementById('profile-image').src = profileImage;
+      }
+    });
+  </script>
 </body>
 </html>

@@ -24,8 +24,24 @@ app.get('/signup.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/signup.html'));
 });
 
+app.get('/profile.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/profile.html'));
+});
+
 app.get('/game.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/game.html'));
+});
+
+app.get('/game-win.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/game-win.html'));
+});
+
+app.get('/game-loose.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/game-loose.html'));
+});
+
+app.get('/buy.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/buy.html'));
 });
 
 // Database setup

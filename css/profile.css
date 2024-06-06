@@ -7,50 +7,7 @@ body {
     margin: 0;
     background-color: rgb(102, 208, 240);
     background-repeat: no-repeat;
-}
-  
-header {
-    position: fixed;
-    top: 0;
-    height: 20%;
-    width: 100%;
-    max-width: 100%;
-    background-image: url("/img/top.png");
-    background-size: cover;
-    z-index: 1;
-}
-  
-.top {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-}
-  
-#image {
-    margin-top: 20px;
-    margin-right: 20px;
-    width: 7%;
-    height: 7%;
-}
-  
-.money {
-    width: 20%;
-}
-  
-.coin {
-    margin-top: 20px;
-    margin-left: 20px;
-    width: 7%;
-    height: 7%;
-}  
-  
-.bottom-image {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 100%;
-    z-index: -1;
+    user-select: none;
 }
 
 .content{
