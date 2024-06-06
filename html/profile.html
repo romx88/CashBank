@@ -31,8 +31,8 @@
       <div class="horizontal-bar"></div>
       <div id="name" class="container--account"></div>
       <div class="container--button">
-        <button class="button--disconect">Disconnect</button>
-        <button class="button--delete">Delete</button>
+        <a href="/"><button class="button--disconect">Disconnect</button></a>
+        <button onclick="deleteAccount(localStorage.getItem('pseudo'))" class="button--delete">Delete</button>
       </div>
     </div>
 
@@ -46,6 +46,24 @@
         const data = await response.json();
 
         document.getElementById('coin').innerHTML = data.coins;
+      }
+
+      async function deleteAccount(pseudo) {
+        const response = await fetch(`/api/delete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ pseudo })
+        });
+        const data = await response.json();
+        if (data.message === 'Account successfully deleted.') {
+          localStorage.removeItem('pseudo');
+          localStorage.removeItem('profilePicture');
+          window.location.href = '/';
+        } else {
+          alert('Erreur lors de la suppression du compte.');
+        }
       }
 
       document.addEventListener('DOMContentLoaded', () => {

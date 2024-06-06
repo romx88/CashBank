@@ -39,6 +39,7 @@ header {
     text-align: center;
     margin-top: 12px;
     margin-left: 50px;
+    transform: translate(100%);
     width: 74px;
     height: 74px;
 

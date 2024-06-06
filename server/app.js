@@ -52,7 +52,7 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
     console.log('Connected to the SQLite database.');
     db.run(`CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pseudo TEXT,
+            pseudo TEXT UNIQUE,
             password TEXT,
             coin INTEGER DEFAULT 100,
             profil_picture TEXT,
@@ -63,18 +63,21 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
 });
 
 app.post('/register', (req, res) => {
-    const { pseudo, password, character } = req.body;
-  
-    db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
-      [pseudo, password, character],
-      function (err) {
-        if (err) {
-          res.status(500).json({ message: 'Failed to register user.' });
-        } else {
-          res.status(200).json({ message: 'User registered successfully!', character: character });
-        }
-      });
-  });  
+  const { pseudo, password, character } = req.body;
+
+  db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
+    [pseudo, password, character],
+    function (err) {
+      if (err) {
+        res.status(500).json({ message: 'Failed to register user.' });
+      } else {
+        db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
+          res.status(500).json({ message: 'User registered successfully!', character: row.character });
+        });
+      }
+    });
+});
+ 
 
   app.post('/login', (req, res) => {
     const { pseudo, password } = req.body;
@@ -100,6 +103,19 @@ app.post('/register', (req, res) => {
       }
     });
   });
+
+  app.post('/api/delete', (req, res) => {
+    const { pseudo } = req.body;
+
+    db.run(`DELETE FROM users WHERE pseudo = ?`, [pseudo], (err) => {
+        if (err) {
+            res.status(500).json({ message: 'Error deleting account.' });
+        } else {
+            res.status(200).json({ message: 'Account successfully deleted.' });
+        }
+    });
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
