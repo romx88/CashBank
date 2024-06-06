@@ -52,20 +52,21 @@
 
   <div class="race-track" id="race-track">
   </div>
+
   <div id="win-popup" class="popup">
     <div class="popup-content">
       <span class="close">&times;</span>
-      <p>Vous avez gagné!</p>
+      <img src="/img/cloud/win.png" alt="Win">
     </div>
   </div>
   
   <div id="lose-popup" class="popup">
     <div class="popup-content">
       <span class="close">&times;</span>
-      <p>Vous avez perdu!</p>
+      <img src="/img/cloud/loose.png" alt="Lose">
     </div>
   </div>
-  
+    
 
 
   <footer>
@@ -83,6 +84,19 @@
         document.getElementById('profile-image').src = profileImage;
       }
     });
+
+    function adjustBet(change) {
+      const betElement = document.querySelector('.current-bet');
+      let betAmount = parseInt(betElement.textContent);
+      betAmount = Math.max(1, betAmount + change);
+      betElement.textContent = betAmount;
+    }
+
+    async function setMaxBet() {
+      const pseudo = localStorage.getItem('pseudo');
+      const balance = await getBalance(pseudo);
+      document.querySelector('.current-bet').textContent = balance;
+    }
 
     async function updateBalance(pseudo, newBalance) {
       newBalance = roundToHalf(newBalance);
@@ -134,7 +148,7 @@
     async function startRace() {
         const raceTrack = document.getElementById('race-track');
         const betInput = document.getElementById('bet-input');
-        const betAmount = parseInt(betInput.value);
+        const betAmount = parseInt(document.querySelector('.current-bet').textContent);
         const bet = `dauphin${betInput.value}`;
         const dolphins = document.querySelectorAll('.dauphin');
 
@@ -194,6 +208,11 @@
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('bett-less').addEventListener('click', () => adjustBet(-1));
+    document.getElementById('bett-more').addEventListener('click', () => adjustBet(1));
+    document.getElementById('bett-max').addEventListener('click', setMaxBet);
+});
   </script>
 </body>
 </html>

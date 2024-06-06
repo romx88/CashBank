@@ -23,7 +23,7 @@
     <div class="content">
         <div class="avatar-selection">
             <button id="button--coins-left" class="button--coins" onclick="Before()"></button>
-            <img id="character" src="/img/character/character_1.png" alt="avatar img" class="avatar">
+            <img id="character" src="/img/character/character_0.png" alt="avatar img" class="avatar">
             <button id="button--coins-right" class="button--coins" onclick="After()"></button>
         </div>
         <form class="signup-form" onsubmit="register(event)">
@@ -52,7 +52,7 @@
       let currentCharacter = 0;
 
       function Before() {
-          if (currentCharacter > 1) {
+          if (currentCharacter > 0) {
               currentCharacter--;
               document.getElementById("character").src = `/img/character/character_${currentCharacter}.png`;
           }else{
