@@ -174,7 +174,7 @@ header {
 .center-cloud {
   z-index: 2;
   display: block;
-  margin-top: 12%;
+  margin-top: 110px;
   margin-left: 36%;
   transform: translateY(50%);
   width: 30%;
