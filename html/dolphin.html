@@ -146,52 +146,52 @@
     });
 
     async function startRace() {
-        const raceTrack = document.getElementById('race-track');
-        const betInput = document.getElementById('bet-input');
-        const betAmount = parseInt(document.querySelector('.current-bet').textContent);
-        const bet = `dauphin${betInput.value}`;
-        const dolphins = document.querySelectorAll('.dauphin');
+      const raceTrack = document.getElementById('race-track');
+      const betInput = document.getElementById('bet-input');
+      const betAmount = parseInt(document.querySelector('.current-bet').textContent);
+      const bet = betInput.value;
+      const dolphins = document.querySelectorAll('.dauphin');
 
-        // Vérifier si le joueur a suffisamment d'argent pour placer sa mise
-        const pseudo = localStorage.getItem('pseudo');
-        let balance = await getBalance(pseudo);
-        if (balance < betAmount) {
-            alert("Vous n'avez pas assez d'argent pour placer cette mise !");
-            return;
-        }
+      const pseudo = localStorage.getItem('pseudo');
+      let balance = await getBalance(pseudo);
+      if (balance < betAmount) {
+          alert("Vous n'avez pas assez d'argent pour placer cette mise !");
+          return;
+      }
 
-        balance -= betAmount;
-        await updateBalance(pseudo, balance);
+      balance -= betAmount;
+      await updateBalance(pseudo, balance);
 
-        dolphins.forEach(dauphin => dauphin.style.left = '0px');
+      dolphins.forEach(dauphin => dauphin.style.left = '0px');
 
-        const winningDolphin = `dauphin${Math.floor(Math.random() * 3) + 1}`;
+      const winningDolphinId = Math.floor(Math.random() * 3) + 1; // ID du dauphin gagnant
 
-        dolphins.forEach(dauphin => {
-            let position = 0;
-            let oscillation = 0;
-            const speed = Math.random() * 5 + 1;
-            const interval = setInterval(() => {
-                position += speed;
-                oscillation += 0.1;
-                dauphin.style.left = `${position}px`;
-                dauphin.style.top = `${parseFloat(dauphin.style.top) + Math.sin(oscillation) * 3}px`;
-                if (position >= raceTrack.offsetWidth - 300) {
-                    clearInterval(interval);
-                    if (dauphin.id === winningDolphin) {
-                        document.getElementById('win-popup').style.display = 'block';
-                        balance += betAmount * 2;
-                        updateBalance(pseudo, balance);
-                    } else {
-                        document.getElementById('lose-popup').style.display = 'block';
-                    }
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-                }
-            }, 20);
-        });
-    }
+      dolphins.forEach((dauphin, index) => {
+          let position = 0;
+          let oscillation = 0;
+          const speed = Math.random() * 5 + 1;
+          const interval = setInterval(() => {
+              position += speed;
+              oscillation += 0.1;
+              dauphin.style.left = `${position}px`;
+              dauphin.style.top = `${parseFloat(dauphin.style.top) + Math.sin(oscillation) * 3}px`;
+              if (position >= raceTrack.offsetWidth - 300) {
+                  clearInterval(interval);
+                  if (bet === winningDolphinId) { // Comparer l'ID du dauphin avec celui du dauphin gagnant
+                      document.getElementById('win-popup').style.display = 'block';
+                      balance += betAmount * 2;
+                      updateBalance(pseudo, balance);
+                  } else {
+                      document.getElementById('lose-popup').style.display = 'block';
+                  }
+                  setTimeout(() => {
+                      location.reload();
+                  }, 1000);
+              }
+          }, 20);
+    });
+}
+
 
     document.addEventListener('DOMContentLoaded', () => {
     const winPopup = document.getElementById('win-popup');
