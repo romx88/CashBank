@@ -3,6 +3,7 @@
 body {
   margin: 0;
   background-color: rgb(102, 208, 240);
+  user-select: none;
 }
 
 .center-cloud {
