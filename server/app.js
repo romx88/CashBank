@@ -54,7 +54,7 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pseudo TEXT,
             password TEXT,
-            coin INTEGER DEFAULT 0,
+            coin INTEGER DEFAULT 100,
             profil_picture TEXT,
             cookie TEXT,
             character TEXT
@@ -88,7 +88,18 @@ app.post('/register', (req, res) => {
         res.status(200).json({ message: 'Login successful!', character: row.character });
       }
     });
-  });  
+  });
+
+  app.get('/api/getCoins', (req, res) => {
+    const { pseudo } = req.query;
+    db.get(`SELECT coin FROM users WHERE pseudo = ?`, [pseudo], (err, row) => {
+      if (err) {
+        res.status(500).json({ message: 'Error retrieving coins.' });
+      } else {
+        res.status(200).json({ coins: row ? row.coin : 0 });
+      }
+    });
+  });
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

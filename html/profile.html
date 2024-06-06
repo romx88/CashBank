@@ -15,21 +15,21 @@
           <img src="/img/coin.png" class="coin" />
         </a>
         <a href="/buy.html">
-          <img src="/img/money.png" class="money" />
+          <div id="money" class="money">
+            <p id="coin" class="coins"></p>
+          </div>
         </a>
         <a href="/profile.html">
-          <img class="profile-image" id="profile-image" alt="Login" src="" />
+          <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
         </a>
       </div>
     </header>
 
     <div class="content">
-      <img id="character" src="" alt="avatar img" class="avatar">
+      <input type="image" id="character" src="" alt="avatar img" class="avatar">
       <div class="avatar-shadow"></div>
       <div class="horizontal-bar"></div>
-      <div class="container--account">
-        <p class="account-name"></p>
-      </div>
+      <div id="name" class="container--account"></div>
       <div class="container--button">
         <button class="button--disconect">Disconnect</button>
         <button class="button--delete">Delete</button>
@@ -41,11 +41,22 @@
     </footer>
 
     <script>
+      async function getBalance(pseudo) {
+        const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+        const data = await response.json();
+
+        document.getElementById('coin').innerHTML = data.coins;
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
         const profileImage = localStorage.getItem('profilePicture');
+        const pseudo = localStorage.getItem('pseudo');
+        getBalance(localStorage.getItem("pseudo"))
+
         if (profileImage) {
           document.getElementById('profile-image').src = profileImage;
           document.getElementById('character').src = profileImage;
+          document.getElementById('name').innerHTML = pseudo;
         }
       });
     </script>
