@@ -20,6 +20,7 @@
           <p id="coin" class="coins"></p>
         </div>
       </a>
+      
       <a href="/profile.html">
         <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
       </a>
@@ -248,7 +249,7 @@
 
   async function updateCoinDisplay(pseudo) {
     const balance = await getBalance(pseudo);
-    document.getElementById('money').textContent = balance;
+    document.getElementById('coin').textContent = balance;
   }
 });
 
