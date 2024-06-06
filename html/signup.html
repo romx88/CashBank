@@ -65,36 +65,37 @@
         }
 
         function register(event) {
-            event.preventDefault();
-            const pseudo = document.getElementById('signup-pseudo').value;
-            const password = document.getElementById('signup-password').value;
-            const passwordRetype = document.getElementById('signup-password-retype').value;
-            const character = document.getElementById('character').src.split('/').pop(); // Get character image name
+        event.preventDefault();
+        const pseudo = document.getElementById('signup-pseudo').value;
+        const password = document.getElementById('signup-password').value;
+        const passwordRetype = document.getElementById('signup-password-retype').value;
+        const character = document.getElementById('character').src.split('/').pop();
 
-            if (password !== passwordRetype) {
-                alert("Passwords don't match. Retype your Password.");
-                return;
-            }
-
-            fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ pseudo, password, character }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === 'User registered successfully!') {
-                    window.location.href = '/game.html';
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        if (password !== passwordRetype) {
+            alert("Passwords don't match. Retype your Password.");
+            return;
         }
+
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ pseudo, password, character }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'User registered successfully!') {
+                localStorage.setItem('profilePicture', `/img/character/${data.character}`);
+                window.location.href = '/game.html';
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
     </script>
 </body>
 </html>

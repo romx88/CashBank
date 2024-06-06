@@ -9,9 +9,11 @@
 <body>
   <header>
     <div class="top">
-      <img src="/img/coin.png" class="coin" />
+      <a href="/">
+        <img src="/img/coin.png" class="coin" />
+      </a>
       <img src="/img/money.png" class="money" />
-      <input type="image" id="image" alt="Login" src="/img/character/character_0.png" />
+      <input type="image" id="profile-image" alt="Profile" src="" class="profile-image" />
     </div>
   </header>
 
@@ -40,5 +42,14 @@
       <img src="/img/nuage-background.png" class="bottom-image" />
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImage = localStorage.getItem('profilePicture');
+      if (profileImage) {
+        document.getElementById('profile-image').src = profileImage;
+      }
+    });
+  </script>
 </body>
 </html>

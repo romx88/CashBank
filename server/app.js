@@ -47,32 +47,32 @@ const db = new sqlite3.Database(path.join(__dirname, '../database.db'), (err) =>
 });
 
 app.post('/register', (req, res) => {
-  const { pseudo, password, character } = req.body;
+    const { pseudo, password, character } = req.body;
+  
+    db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
+      [pseudo, password, character],
+      function (err) {
+        if (err) {
+          res.status(500).json({ message: 'Failed to register user.' });
+        } else {
+          res.status(200).json({ message: 'User registered successfully!', character: character });
+        }
+      });
+  });  
 
-  db.run(`INSERT INTO users (pseudo, password, character) VALUES (?, ?, ?)`,
-    [pseudo, password, character],
-    function (err) {
+  app.post('/login', (req, res) => {
+    const { pseudo, password } = req.body;
+  
+    db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
       if (err) {
-        res.status(500).json({ message: 'Failed to register user.' });
+        res.status(500).json({ message: 'Error logging in.' });
+      } else if (!row) {
+        res.status(400).json({ message: 'Invalid username or password.' });
       } else {
-        res.status(200).json({ message: 'User registered successfully!' });
+        res.status(200).json({ message: 'Login successful!', character: row.character });
       }
     });
-});
-
-app.post('/login', (req, res) => {
-  const { pseudo, password } = req.body;
-
-  db.get(`SELECT * FROM users WHERE pseudo = ? AND password = ?`, [pseudo, password], (err, row) => {
-    if (err) {
-      res.status(500).json({ message: 'Error logging in.' });
-    } else if (!row) {
-      res.status(400).json({ message: 'Invalid username or password.' });
-    } else {
-      res.status(200).json({ message: 'Login successful!' });
-    }
-  });
-});
+  });  
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
