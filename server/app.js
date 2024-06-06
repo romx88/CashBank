@@ -37,6 +37,10 @@ app.get('/plinko.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/plinko.html'));
 });
 
+app.get('/dolphin.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/dolphin.html'));
+});
+
 app.get('/buy.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/buy.html'));
 });
