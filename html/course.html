@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course de Dauphins</title>
+  <link rel="stylesheet" href="/css/dauphin.css">
+</head>
+<body>
+  <header>
+    <h1>Course de Dauphins</h1>
+    <div>
+      <label for="bet-input">Pariez sur un dauphin (1-13) :</label>
+      <input type="number" id="bet-input" min="1" max="13">
+      <button id="start-button">Commencer la course</button>
+    </div>
+  </header>
+  <main>
+    <div class="race-track" id="race-track">
+      <!-- Dauphins seront générés ici par JavaScript -->
+    </div>
+  </main>
+  <footer>
+    <p id="result"></p>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const startButton = document.getElementById('start-button');
+        startButton.addEventListener('click', startRace);
+
+        const raceTrack = document.getElementById('race-track');
+        
+        // Génération des 13 dauphins
+        for (let i = 1; i <= 13; i++) {
+            const dauphinDiv = document.createElement('div');
+            dauphinDiv.id = `dauphin${i}`;
+            dauphinDiv.classList.add('dauphin');
+            dauphinDiv.style.top = `${i * 40}px`; // Adjust spacing to fit in the view
+            const dauphinImg = document.createElement('img');
+            dauphinImg.src = '/img/dauphin.png';
+            dauphinImg.alt = `Dauphin ${i}`;
+            dauphinDiv.appendChild(dauphinImg);
+            raceTrack.appendChild(dauphinDiv);
+        }
+        });
+
+        function startRace() {
+        const betInput = document.getElementById('bet-input');
+        const bet = `dauphin${betInput.value}`;
+        const dolphins = document.querySelectorAll('.dauphin');
+        const result = document.getElementById('result');
+        result.textContent = '';
+
+        dolphins.forEach(dauphin => dauphin.style.left = '0px');
+
+        const winningDolphin = `dauphin${Math.floor(Math.random() * 13) + 1}`;
+
+        dolphins.forEach(dauphin => {
+            let position = 0;
+            let oscillation = 0;
+            const speed = Math.random() * 5 + 1;
+            const interval = setInterval(() => {
+            position += speed;
+            oscillation += 0.1;
+            dauphin.style.left = `${position}px`;
+            dauphin.style.top = `${parseFloat(dauphin.style.top) + Math.sin(oscillation) * 5}px`;
+            if (position >= window.innerWidth - 100) {
+                clearInterval(interval);
+                if (dauphin.id === winningDolphin) {
+                result.textContent = `Le ${dauphin.id} a gagné! ${bet === dauphin.id ? 'Vous avez gagné votre pari!' : 'Vous avez perdu votre pari.'}`;
+                }
+            }
+            }, 20);
+        });
+    }
+
+  </script>
+</body>
+</html>

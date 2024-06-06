@@ -11,6 +11,18 @@ body {
   user-select: none;
 }
 
+.center-cloud {
+  z-index: 2;
+  background-image: url("/img/cloud/cloud.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  margin-left: 50.5%;
+  transform: translate(-50%);
+  width: 200px;
+  height: 100px;
+}
+
 .cloud--bet {
   position: absolute;
   margin-top: 7%;
@@ -121,14 +133,14 @@ body {
   left: 50%;
   border: none;
   background: none;
-  background-image: url("/img/button/spin.png");
+  background-image: url("/img/button/drop.png");
   background-size: contain;
   width: 230px;
   height: 200px;
 }
 
 .button--spin:active {
-  background-image: url("/img/button/spin_pressed.png");
+  background-image: url("/img/button/drop_pressed.png");
   background-size: contain;
   width: 230px;
   height: 200px;
@@ -139,56 +151,60 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#launch-button {
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    width: fit-content;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: -1%; /* Ajustement pour positionner le board sous center-cloud */
 }
 
 #board {
-    width: 300px;
-    height: 400px;
-    position: relative;
-    background-color: lightblue;
-    border: 2px solid #000;
-    overflow: hidden;
+  width: 200px; /* Taille réduite */
+  height: 215px; /* Taille ajustée pour rapprocher la fin du board */
+  position: relative;
+  overflow: hidden;
 }
 
 .peg {
-    width: 10px;
-    height: 10px;
-    background-color: red;
-    border-radius: 50%;
-    position: absolute;
+  width: 5px; /* Taille réduite */
+  height: 5px; /* Taille réduite */
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 #ball {
-    width: 10px;
-    height: 10px;
-    background-color: green;
+    width: 8px; /* Taille réduite */
+    height: 8px; /* Taille réduite */
+    background-color: rgb(0, 187, 255);
     border-radius: 50%;
     position: absolute;
 }
 
 #multipliers {
-    display: flex;
-    justify-content: space-between;
-    width: 300px;
-    margin-top: 10px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
 }
 
 .multiplier {
-    width: 40px;
-    height: 40px;
-    background-color: yellow;
+  margin-top: -5px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-image: url("/img/no_coins.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #000;
-    font-size: 16px;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 135.5%;
+    color: rgb(0, 0, 0);
 }
 
 #score {
@@ -213,7 +229,7 @@ body {
     position: absolute;
     top: 0;
     width: 10px;
-    height: 400px;
+    height: 300px; /* Ajusté pour la nouvelle taille */
     background-color: transparent;
 }
 
@@ -224,3 +240,13 @@ body {
 #right-barrier {
     right: 0;
 }
+
+@keyframes downUp {
+  0%, 100% {
+    margin-top: 0px;
+  }
+  50% {
+    margin-top: 1px;
+  }
+}
+

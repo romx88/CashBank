@@ -1,10 +1,10 @@
+<!-- HTML inchangé -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plinko</title>
-  <link rel="stylesheet" href="/css/game.css" />
   <link rel="stylesheet" href="/css/global/footer-game.css" />
   <link rel="stylesheet" href="/css/global/navbar.css" />
   <link rel="stylesheet" href="/css/plinko.css" />  
@@ -43,27 +43,26 @@
     </div>
   </div>
 
-  <div class="center-cloud">
-    <div id="game">
-        <div id="board">
-            <div id="left-barrier"></div>
-            <div id="inner-board"></div>
-            <div id="right-barrier"></div>
-        </div>
-        <div id="multipliers">
-            <div class="multiplier">0.5</div>
-            <div class="multiplier">2</div>
-            <div class="multiplier">5</div>
-            <div class="multiplier">10</div>
-            <div class="multiplier">5</div>
-            <div class="multiplier">2</div>
-            <div class="multiplier">0.5</div>
-        </div>
+  <div class="center-cloud"></div>
+  <div id="game">
+    <div id="board" class="reduced-board">
+        <div id="left-barrier"></div>
+        <div id="inner-board"></div>
+        <div id="right-barrier"></div>
     </div>
+    <div id="multipliers">
+        <div class="multiplier">0.2</div>
+        <div class="multiplier">0.5</div>
+        <div class="multiplier">1</div>
+        <div class="multiplier">5</div>
+        <div class="multiplier">1</div>
+        <div class="multiplier">0.5</div>
+        <div class="multiplier">0.2</div>
+    </div>
+  </div>  
 
-    <div class="buttons">
-      <button class="button--spin" id="launch-button"></button>
-    </div>
+  <div class="buttons">
+    <button class="button--spin" id="launch-button"></button>
   </div>
     
   <footer>
@@ -115,7 +114,7 @@
     let currentBet = 5;
     const gravity = 0.1;
     const damping = 0.7;
-    const ballRadius = 5;
+    const ballRadius = 4; // Taille de la balle réduite
 
     document.getElementById('launch-button').addEventListener('click', async () => {
       const pseudo = localStorage.getItem('pseudo');
@@ -136,11 +135,12 @@
     function launchBall(betValue) {
         const ball = document.createElement('div');
         ball.id = 'ball';
-        ball.style.left = '145px';
+        randomX = Math.floor(Math.random() * 31);
+        ball.style.left = '85'+randomX+'px';
         ball.style.top = '0px';
         document.getElementById('board').appendChild(ball);
 
-        let x = 145; 
+        let x = 85+randomX; 
         let y = 0;
         let vx = (Math.random() - 0.5) * 4;
         let vy = 0;
@@ -150,7 +150,7 @@
             x += vx;
             y += vy;
 
-            if (x - ballRadius <= 0 || x + ballRadius >= 280) {
+            if (x - ballRadius <= 0 || x + ballRadius >= 198) {
                 vx = -vx;
             }
 
@@ -171,7 +171,7 @@
                 }
             }
 
-            if (y >= 360) {
+            if (y >= 215) { // Ajusté pour la nouvelle taille
                 clearInterval(interval);
                 checkMultiplier(x, betValue);
                 ball.remove();
@@ -183,20 +183,26 @@
     }
 
     async function checkMultiplier(x, betValue) {
-        const multipliers = document.getElementsByClassName('multiplier');
-        const index = Math.floor(x / 40);
-        const multiplier = parseFloat(multipliers[index].innerText);
-        const winValue = betValue * multiplier;
+    const multipliers = document.getElementsByClassName('multiplier');
+    const index = Math.floor(x / 28.5);
+    const multiplier = parseFloat(multipliers[index].innerText);
+    multipliers[index].style.animation = 'downUp 0.1s ease';
+    setTimeout(() => {
+      multipliers[index].style.animation = '';
+    }, 500);
 
-        const pseudo = localStorage.getItem('pseudo');
-        let balance = await getBalance(pseudo);
-        balance += winValue;
-        await updateBalance(pseudo, balance);
+    const winValue = betValue * multiplier;
 
-        score += multiplier;
-        document.getElementById('score').innerText = `Score: ${score.toFixed(2)}`;
-        document.getElementById('money').innerText = `Argent: ${balance.toFixed(2)}`;
-    }
+    const pseudo = localStorage.getItem('pseudo');
+    let balance = await getBalance(pseudo);
+    balance += winValue;
+    await updateBalance(pseudo, balance);
+
+    score += multiplier;
+    document.getElementById('score').innerText = `Score: ${score.toFixed(2)}`;
+    document.getElementById('money').innerText = `Argent: ${balance.toFixed(2)}`;
+}
+
 
     function adjustBet(change) {
         currentBet = Math.max(1, currentBet + change);
@@ -211,16 +217,16 @@
     }
 
     const board = document.getElementById('board');
-    const pegOffset = 30;
+    const pegOffset = 20; // Réduit l'écart entre les pegs
     const initialOffset = (board.clientWidth - 3 * pegOffset) / 2;
 
-    for (let i = 1; i < 8; i++) {
+    for (let i = 1; i < 7; i++) {
         for (let j = 0; j < i + 2; j++) {
             const peg = document.createElement('div');
             peg.className = 'peg';
             const offset = (board.clientWidth - (i + 2) * pegOffset) / 2 + 5;
             peg.style.left = `${offset + j * pegOffset}px`;
-            peg.style.top = `${i * 40 + 20}px`;
+            peg.style.top = `${i * 30 + 15}px`; // Ajusté pour la nouvelle taille
             board.appendChild(peg);
         }
     }
