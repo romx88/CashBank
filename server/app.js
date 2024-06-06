@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use('/img', express.static(path.join(__dirname, '../img')));
+app.use('/music', express.static(path.join(__dirname, '../music')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/index.html'));
@@ -39,6 +40,10 @@ app.get('/plinko.html', (req, res) => {
 
 app.get('/buy.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../html/buy.html'));
+});
+
+app.get('/music.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../html/music.html'));
 });
 
 // Database setup

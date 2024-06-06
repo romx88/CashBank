@@ -97,6 +97,13 @@
 
     const doors = document.querySelectorAll(".door");
     document.querySelector("#spinner").addEventListener("click", async () => {
+
+      const spinSound = new Audio('/music/spin.mp3');
+      spinSound.play();
+
+      const slotMachineSound = new Audio('/music/slot-machine.mp3')
+      slotMachineSound.play();
+
       console.log("Spinner clicked");
       let balance = await getBalance(pseudo);
       console.log("Current balance:", balance);
@@ -112,9 +119,15 @@
         const centerCloud = document.querySelector('.center-cloud');
         if (result) {
           if (checkJackpot()) {
+            const jackpotSounds = new Audio('/music/jackpot.mp3');
+            jackpotSounds.play();
+
             balance += betAmount * 50;
             await updateBalance(pseudo, balance);
           }else{
+            const jackpotSounds = new Audio('/music/jackpot.mp3');
+            jackpotSounds.play();
+
             balance += betAmount * 25;
             await updateBalance(pseudo, balance);
           }
@@ -124,6 +137,8 @@
             window.location.href = '/game.html';
           }, 1500);
         } else {
+          const looseSounds = new Audio('/music/loose.wav');
+          looseSounds.play();
           document.body.classList.add("loose");
           centerCloud.classList.add("loose");
           setTimeout(() => {
