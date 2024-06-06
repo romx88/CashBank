@@ -28,7 +28,7 @@
   </header>
 
   <div class="cloud--bet">
-    <p class="current-bet">0</p>
+    <p class="current-bet">5</p>
     <div class="container--button">
       <button id="bett-less" class="button--less-bett">
         <div class="button--less-bett-text">-</div>
@@ -85,9 +85,13 @@
     "use strict";
 
     const items = [
+      "7️⃣",
       "🍓",
+      "🍋",
       "🍉",
-      "🍒"
+      "🍒",
+      "🍊",
+      "🍎"
     ];
     document.querySelector(".info").textContent = items.join(" ");
 
@@ -99,16 +103,21 @@
       const betAmount = parseInt(document.querySelector('.current-bet').textContent);
       console.log("Bet amount:", betAmount);
 
-      if (balance >= betAmount) {
+      if (balance >= betAmount && betAmount > 0) {
         balance -= betAmount;
         console.log("New balance after bet:", balance);
         await updateBalance(pseudo, balance);
         await spin();
-        const result = checkJackpot();
+        const result = checkWin();
         const centerCloud = document.querySelector('.center-cloud');
         if (result) {
-          balance += betAmount * 2;
-          await updateBalance(pseudo, balance);
+          if (checkJackpot()) {
+            balance += betAmount * 50;
+            await updateBalance(pseudo, balance);
+          }else{
+            balance += betAmount * 25;
+            await updateBalance(pseudo, balance);
+          }
           document.body.classList.add("win");
           centerCloud.classList.add("win");
           setTimeout(() => {
@@ -142,10 +151,21 @@
       }
     }
 
-    function checkJackpot() {
+    function checkWin() {
       const results = Array.from(doors).map(door => door.querySelector('.box').textContent);
       return results.every(result => result === results[0]);
     }
+
+    function checkJackpot() {
+      const results = Array.from(doors).map(door => door.querySelector('.box').textContent);
+
+      if (results.every(result => result === results[0])) {
+        return results[0] === items[0];
+      } else {
+        return false;
+      }
+    }
+
 
     function init(firstInit = true, groups = 1, duration = 1) {
       for (const door of doors) {
