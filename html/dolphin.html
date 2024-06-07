@@ -144,6 +144,9 @@
     });
 
     async function startRace() {
+      const startButton = document.getElementById('start-button');
+      startButton.classList.add('disabled');
+
       const raceTrack = document.getElementById('race-track');
       const betInput = document.getElementById('bet-input');
       const betAmount = parseInt(document.querySelector('.current-bet').textContent);
@@ -162,9 +165,9 @@
 
       dolphins.forEach(dauphin => dauphin.style.left = '0px');
 
-      const speeds = Array.from(dolphins).map(() => Math.random() * 5 + 1);
       let positions = [0, 0, 0];
       let oscillations = [0, 0, 0];
+      let speeds = Array.from(dolphins).map(() => Math.random() * 5 + 1);
       let finished = false;
       let winner = null;
 
@@ -175,6 +178,10 @@
                   oscillations[index] += 0.1;
                   dauphin.style.left = `${positions[index]}px`;
                   dauphin.style.top = `${parseFloat(dauphin.style.top) + Math.sin(oscillations[index]) * 1.5}px`;
+
+                  if (Math.random() < 0.01) {
+                      speeds[index] = Math.random() * 5 + 1;
+                  }
 
                   if (positions[index] >= raceTrack.offsetWidth - 300) {
                       if (!finished) {

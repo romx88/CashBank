@@ -11,6 +11,10 @@ body {
   user-select: none;
 }
 
+.money{
+  margin-top: 0px !important;
+}
+
 .center-cloud {
   z-index: 2;
   background-image: url("/img/cloud/cloud.png");
