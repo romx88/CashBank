@@ -161,6 +161,9 @@
     });
 
     async function startRace() {
+      const gunshotSounds = new Audio("/music/gunshot.mp3")
+      gunshotSounds.volume = 0.2;
+      gunshotSounds.play()
       const startButton = document.getElementById('start-button');
       startButton.classList.add('disabled');
 

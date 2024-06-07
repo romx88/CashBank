@@ -135,7 +135,7 @@
 
     document.getElementById('launch-button').addEventListener('click', async () => {
       const spinSounds = new Audio('/music/spin.mp3');
-      spinSounds.volume = 0.3;
+      spinSounds.volume = 0.2;
       spinSounds.play();
       
       const pseudo = localStorage.getItem('pseudo');
@@ -256,6 +256,44 @@
             board.appendChild(peg);
         }
     }
+
+    let spinInterval;
+
+    // Fonction pour commencer l'incrémentation automatique lors du long appui
+    function startSpinIncrement() {
+      spinInterval = setInterval(incrementSpin, 100); // Changez l'intervalle selon votre préférence
+    }
+
+    // Fonction pour arrêter l'incrémentation automatique lorsque le bouton est relâché
+    function stopSpinIncrement() {
+      clearInterval(spinInterval);
+    }
+
+    // Fonction pour incrémenter la mise de manière continue lors du long appui
+    function incrementSpin() {
+      const spinButton = document.getElementById('launch-button');
+      spinButton.click(); // Simule un clic sur le bouton "Spin"
+    }
+
+    // Écouteurs d'événements pour démarrer et arrêter l'incrémentation automatique
+    document.getElementById('launch-button').addEventListener('mousedown', startSpinIncrement);
+    document.getElementById('launch-button').addEventListener('mouseup', stopSpinIncrement);
+    document.getElementById('launch-button').addEventListener('touchstart', startSpinIncrement);
+    document.getElementById('launch-button').addEventListener('touchend', stopSpinIncrement);
+    // Ajoutez ces deux événements au bouton Spin
+
+    document.getElementById('launch-button').addEventListener('mousedown', startSpinAnimation);
+    document.getElementById('launch-button').addEventListener('mouseup', stopSpinAnimation);
+    document.getElementById('launch-button').addEventListener('mouseleave', stopSpinAnimation); // Ajoutez cet événement pour arrêter l'animation si le curseur quitte le bouton
+
+    function startSpinAnimation() {
+        document.getElementById('launch-button').classList.add('active');
+    }
+
+    function stopSpinAnimation() {
+        document.getElementById('launch-button').classList.remove('active');
+    }
+
   </script>
 </body>
 </html>

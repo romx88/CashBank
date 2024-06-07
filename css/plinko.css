@@ -152,6 +152,14 @@ body {
   height: 200px;
 }
 
+.button--spin.active {
+  background-image: url("/img/button/drop_pressed.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+
 #game {
     position: relative;
     display: flex;
