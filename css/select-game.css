@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    min-height: 100vh;
+    background-color: rgb(102, 208, 240);
+    font-family: 'Bungee', cursive;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 20vh;
+    background-image: url("/img/top.png");
+    background-size: cover;
+    z-index: 1;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#image, .coin, .money {
+    height: auto;
+}
+
+#image {
+    width: 7%;
+}
+
+.money {
+    width: 20%;
+}
+
+.coin {
+    width: 7%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding-top: 22vh;
+    box-sizing: border-box;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: -5%;
+    gap: 32px;
+    width: 25%;
+    z-index: 2;
+}
+
+.image-container > .helicopter,
+.image-container > .dolphin {
+    margin-bottom: 0;
+}
+
+.image-container > .helicopter + .dolphin {
+    margin-top: -32px;
+}
+
+.corde-container {
+    display: flex;
+    justify-content: center;
+    gap: 175px;
+    margin-left: 6px;
+}
+
+.corde {
+    width: 65px;
+    height: 2px;
+    background-color: #000;
+    transform: rotate(90deg);
+}
+
+.helicopter, .dolphin, .slotmachine, .plinko {
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 120px;
+}
+
+.helicopter {
+    background-image: url("/img/helicopter.png");
+}
+
+.dolphin, .slotmachine, .plinko {
+    border: 1px solid black;
+}
+
+.dolphin {
+    background-image: url("/img/dolphin.png");
+}
+
+.slotmachine {
+    background-image: url("/img/slotmachine.png");
+}
+
+.plinko {
+    background-image: url("/img/plinko.png");
+}
+
+.play-button {
+    box-sizing: border-box;
+    padding: 2px 15px;
+    background: rgba(21, 255, 0);
+    border: 2px solid #341D1A;
+    box-shadow: 0px 9px 0px #515795;
+    border-radius: 15px;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 135.5%;
+    color: rgba(0, 0, 0, 0.686);
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    left: 62%;
+    transform: translateX(-50%);
+}
+
+.play-button:active {
+    box-sizing: border-box;
+    padding: 2px 15px;
+    background: rgba(21, 255, 0);
+    border: 2px solid #341D1A;
+    box-shadow: none;
+    border-radius: 15px;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 135.5%;
+    color: rgba(0, 0, 0, 0.686);
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 62%;
+    transform: translateX(-50%);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.bottom-image {
+    width: 100%;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
