@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/css/plinko.css" />  
 </head>
 <body>
+  <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
   <header>
     <div class="top">
       <a href="/">
@@ -117,6 +118,9 @@
     const ballRadius = 4; // Taille de la balle réduite
 
     document.getElementById('launch-button').addEventListener('click', async () => {
+      const spinSounds = new Audio('/music/spin.mp3');
+      spinSounds.play();
+      
       const pseudo = localStorage.getItem('pseudo');
       let balance = await getBalance(pseudo);
       if (balance >= currentBet) {

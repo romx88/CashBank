@@ -99,7 +99,11 @@
       const spinnerButton = document.querySelector("#spinner");
 
       spinnerButton.addEventListener("click", async () => {
-        console.log("Spinner clicked");
+  
+      const spinSound = new Audio('/music/spin.mp3');
+      spinSound.play();
+
+      console.log("Spinner clicked");
         let balance = await getBalance(pseudo);
         console.log("Current balance:", balance);
         const betAmount = parseInt(document.querySelector('.current-bet').textContent);
@@ -116,10 +120,16 @@
           const centerCloud = document.querySelector('.center-cloud');
           if (result) {
             if (checkJackpot()) {
-              balance += betAmount * 50;
+              const jackpotSounds = new Audio('/music/jackpot.mp3');
+            jackpotSounds.play();
+
+            balance += betAmount * 50;
               await updateBalance(pseudo, balance);
             } else {
-              balance += betAmount * 25;
+              const jackpotSounds = new Audio('/music/jackpot.mp3');
+            jackpotSounds.play();
+
+            balance += betAmount * 25;
               await updateBalance(pseudo, balance);
             }
             document.body.classList.add("win");
@@ -128,7 +138,9 @@
               window.location.href = '/game.html';
             }, 1500);
           } else {
-            document.body.classList.add("loose");
+            const looseSounds = new Audio('/music/loose.wav');
+          looseSounds.play();
+          document.body.classList.add("loose");
             centerCloud.classList.add("loose");
             setTimeout(() => {
               window.location.href = '/game.html';
