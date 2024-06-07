@@ -22,7 +22,7 @@ header {
 .top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 0 20px;
     height: 100%;
     box-sizing: border-box;
@@ -33,14 +33,17 @@ header {
 }
 
 #image {
+    margin-top: 20px;
     width: 7%;
 }
 
 .money {
     width: 20%;
+    margin-top: 0;
 }
 
 .coin {
+    margin-top: 20px;
     width: 7%;
 }
 
