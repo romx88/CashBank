@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="/css/plinko.css" />  
 </head>
 <body>
-  <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
   <header>
     <div class="top">
       <a href="/lobby.html">
@@ -136,6 +135,7 @@
 
     document.getElementById('launch-button').addEventListener('click', async () => {
       const spinSounds = new Audio('/music/spin.mp3');
+      spinSounds.volume = 0.3;
       spinSounds.play();
       
       const pseudo = localStorage.getItem('pseudo');
@@ -148,6 +148,7 @@
         alert("Not enough balance!");
       }
     });
+
 
     document.getElementById('bett-less').addEventListener('click', () => adjustBet(-1));
     document.getElementById('bett-more').addEventListener('click', () => adjustBet(1));
@@ -209,6 +210,9 @@
       const index = Math.floor(x / 28.5);
       const multiplier = serverMultipliers[index];
       multipliers[index].style.animation = 'downUp 0.1s ease';
+      const spinSounds = new Audio('/music/collect.mp3');
+      spinSounds.volume = 0.3;
+      spinSounds.play();
       setTimeout(() => {
         multipliers[index].style.animation = '';
       }, 500);
