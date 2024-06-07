@@ -28,6 +28,7 @@ body {
 }
 
 .cloud--bet {
+  z-index: 1;
   position: absolute;
   margin-top: 7%;
   background-image: url("/img/betcloud.png");
