@@ -1,0 +1,58 @@
+footer {
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+}
+  
+.bottom-image {
+    z-index: 0;
+    margin-bottom: -3px;
+    width: 100%;
+    max-width: 100%;
+}
+  
+.coins--info {
+    background: none;
+    background-image: url("/img/coins_info.png");
+    background-size: contain;
+    border: none;
+    position: absolute;
+    right: 1%;
+    margin-top: 4%;
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 0;
+    cursor: pointer;
+}
+  
+.coins--info-dropdown {
+    position: absolute;
+    top: 95px;
+    transform: translateY(-50%);
+    right: 7%;
+    font-family: 'Bungee';
+    font-size: 15px;
+    border: 2px solid white;
+    background-image: url("/img/background_win.png");
+    background-size: cover;
+    background-color: #fdc459;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    display: none;
+}
+  
+.coins--info-dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+  
+.coins--info-dropdown a:hover {
+    background-color: #f1f1f1;
+}
+  
+.coins--info:hover + .coins--info-dropdown {
+    display: block;
+}

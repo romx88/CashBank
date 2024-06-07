@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: rgb(102, 208, 240);
+    background-repeat: no-repeat;
+    user-select: none;
+}
+  
+.content{
+    background-image: url("/img/signup-card.png");
+    background-size: contain; 
+    width: 470px;
+    height: 386px;
+    position: absolute;
+    margin-top: 110px;
+    left: 51.5%;
+    transform: translate(-50%);
+}
+
+.avatar-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.button--coins{
+    display: flex;
+    background-image: url("/img/coins-button.png");
+    background-size: cover; 
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+    margin: 10px 20px 10px 10px;
+}
+
+.button--coins:active{
+    display: flex;
+    background-image: url("/img/coins-button.png");
+    background-size: cover; 
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    cursor: pointer;
+    border: none;
+    margin: 11px 20px 10px 10px;
+}
+
+#button--coins-left{
+   transform: rotate(180deg);
+}
+
+.avatar{
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(-4px 9px 4px rgba(0, 0, 0, 0.25));
+}
+
+.input--pseudo{
+    background: #887C7B;
+    border: 2px solid #341D1A;
+    box-shadow: inset 0px 7px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 15px;
+    box-sizing: border-box;
+
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 135.5%;
+    color: rgb(255, 255, 255);
+}
+
+.input--pseudo::placeholder{
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 135.5%;
+    color: rgba(255, 255, 255, 0.686);
+}
+
+.input--password{
+    background: #887C7B;
+    border: 2px solid #341D1A;
+    box-shadow: inset 0px 7px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 15px;
+    box-sizing: border-box;
+
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 135.5%;
+    color: rgb(255, 255, 255);
+    margin-top: 5px;
+}
+
+.input--password::placeholder{
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 135.5%;
+    color: rgba(255, 255, 255, 0.686);
+}
+
+.signup-form{
+    width: fit-content;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+.input-container {
+    position: relative;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.icon--pseudo {
+    position: absolute;
+    left: 7px;
+    width: 20px;
+    height: 20px;
+}
+
+.icon--password {
+    position: absolute;
+    left: 7px;
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.signup{
+    box-sizing: border-box;
+    padding: 2px 4px;
+    background: #FEFEFF;
+    border: 2px solid #341D1A;
+    box-shadow: 0px 9px 0px #515795;
+    border-radius: 15px;
+
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 135.5%;
+    color: rgba(0, 0, 0, 0.686);
+    
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+.signup:active{
+    box-shadow: none;
+    margin-top: 14px;
+}
+
+.message {
+    width: 70%;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 135.5%;
+    color: rgba(0, 0, 0, 0.686);
+    
+    margin-top: 10px;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+
+.message a {
+    color: #60A9C0;
+    text-decoration: none;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}

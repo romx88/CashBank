@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer.css" />
+  </head>
+  <body>
+    <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
+    <header>
+      <div class="top">
+        <a href="/">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <img src="/img/money.png" class="money" />
+        <img class="profile-image" alt="Login" src="/img/no-character.png" />
+      </div>
+    </header>
+
+    <div class="content">
+        <form class="login-form" onsubmit="login(event)">
+            <div class="input-container">
+                <img src="/img/icon/user.png" alt="" class="icon--pseudo">
+                <input id="login-pseudo" required class="input--pseudo" type="text" placeholder="username">
+              </div>
+            <div class="input-container">
+                <img src="/img/icon/password.png" alt="" class="icon--password">
+                <input id="login-password" required class="input--password" type="password" placeholder="password">
+            </div>
+            <p class="message" >Don't have an account? <a href="/signup.html">Sign Up</a></p>
+            <button type="submit" class="login">Log in</button>
+        </form>
+    </div>
+
+    <footer>
+      <img src="/img/nuage-background.png" class="bottom-image" />
+    </footer>
+
+    <script>
+      function login(event) {
+        event.preventDefault();
+        const pseudo = document.getElementById('login-pseudo').value;
+        const password = document.getElementById('login-password').value;
+  
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ pseudo, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message === 'Login successful!') {
+            localStorage.setItem('pseudo', pseudo);
+            localStorage.setItem('profilePicture', `/img/character/${data.character}`);
+            window.location.href = '/lobby.html';
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -29,7 +29,7 @@ Pour installer et exécuter le projet CashBank localement, suivez les étapes ci
 
 1. **Clonez le dépôt :**
    ```bash
-   git clone https://github.com/votre-utilisateur/cashbank.git
+   git clone https://github.com/romx88/CashBank.git
    cd cashbank
    ```
 

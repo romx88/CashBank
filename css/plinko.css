@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-color: rgb(102, 208, 240);
+  background-repeat: no-repeat;
+  overflow: hidden;
+  user-select: none;
+}
+
+.money{
+  margin-top: 0px !important;
+}
+
+.center-cloud {
+  z-index: 2;
+  background-image: url("/img/cloud/cloud.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  margin-left: 50.5%;
+  transform: translate(-50%);
+  width: 200px;
+  height: 100px;
+}
+
+.cloud--bet {
+  z-index: 1;
+  position: absolute;
+  margin-top: 7%;
+  background-image: url("/img/betcloud.png");
+  background-size: contain;
+  height: 200px;
+  width: 185.5px;
+}
+
+.current-bet {
+  position: relative;
+  top: 14%;
+  left: 40%;
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25), 0px 4px 0px rgba(0, 0, 0, 0.8);
+}
+
+.button--less-bett {
+  z-index: 6;
+  margin-top: 45%;
+  margin-left: 60%;
+  width: 37.56px;
+  height: 39.16px;
+  background: #F4F4F4;
+  cursor: pointer;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 18px;
+  border: none;
+  transform: rotate(90deg);
+}
+
+.button--less-bett-text {
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+  transform: rotate(-90deg);
+  margin-top: -3px;
+}
+
+.button--more-bett {
+  z-index: 2;
+  position: absolute;
+  top: 80%;
+  left: 100%;
+  width: 37.56px;
+  height: 39.16px;
+  background: #F4F4F4;
+  cursor: pointer;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 18px;
+  border: none;
+  transform: rotate(90deg);
+}
+
+.button--more-bett-text {
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 43px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+  transform: rotate(-90deg);
+  margin-top: -3px;
+}
+
+.button--max-bett {
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+
+.button--max-bett-text {
+  margin-top: -50%;
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 23px;
+  color: #D8D6D6;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+}
+
+.button--spin {
+  z-index: 10;
+  cursor: pointer;
+  position: absolute;
+  top: 65%;
+  transform: translate(-50%);
+  left: 50%;
+  border: none;
+  background: none;
+  background-image: url("/img/button/drop.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+.button--spin:active {
+  background-image: url("/img/button/drop_pressed.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+.button--spin.active {
+  background-image: url("/img/button/drop_pressed.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+
+#game {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: -1%; /* Ajustement pour positionner le board sous center-cloud */
+}
+
+#board {
+  width: 200px; /* Taille réduite */
+  height: 215px; /* Taille ajustée pour rapprocher la fin du board */
+  position: relative;
+  overflow: hidden;
+}
+
+.peg {
+  width: 5px; /* Taille réduite */
+  height: 5px; /* Taille réduite */
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+#ball {
+    width: 8px; /* Taille réduite */
+    height: 8px; /* Taille réduite */
+    background-color: rgb(0, 187, 255);
+    border-radius: 50%;
+    position: absolute;
+}
+
+#multipliers {
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.multiplier {
+  margin-top: -5px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-image: url("/img/no_coins.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bungee';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 135.5%;
+    color: rgb(0, 0, 0);
+}
+
+#score {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#money {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#increase-money {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#left-barrier,
+#right-barrier {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 300px; /* Ajusté pour la nouvelle taille */
+    background-color: transparent;
+}
+
+#left-barrier {
+    left: 0;
+}
+
+#right-barrier {
+    right: 0;
+}
+
+@keyframes downUp {
+  0%, 100% {
+    margin-top: 0px;
+  }
+  50% {
+    margin-top: 1px;
+  }
+}

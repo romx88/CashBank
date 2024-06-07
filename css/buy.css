@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+  margin: 0;
+  background-color: rgb(102, 208, 240);
+  user-select: none;
+}
+
+.center-cloud {
+  position: absolute;
+  display: block;
+  top: 40%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 30%;
+}
+
+.text-over {
+  position: absolute;
+  left: 50%;
+}
+
+.button1,
+.button2 {
+  z-index: 2;
+  margin-top: -5px;
+  box-sizing: border-box;
+  width: 60px;
+  height: 39px;
+  background: #FEFEFF;
+  border: 2px solid #341D1A;
+  box-shadow: 0px 6px 0px #515795;
+  border-radius: 10px;
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.686);
+  cursor: pointer;
+  transition: box-shadow 0.1s;
+}
+
+.button1:active,
+.button2:active {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+
+.container--controls {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button--buy {
+  z-index: 10;
+  cursor: pointer;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: none;
+  background-image: url("/img/button/buy.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+.button--buy:active {
+  background-image: url("/img/button/buy_pressed.png");
+  background-size: contain;
+  width: 230px;
+  height: 200px;
+}
+
+.container--buy {
+  box-sizing: border-box;
+  width: 200px;
+  height: 45px;
+  background: #655756;
+  border: 2px solid #341D1A;
+  box-shadow: inset 0px -7px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
+}

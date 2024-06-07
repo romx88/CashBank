@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer.css" />
+  </head>
+  <body>
+    <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
+    <header>
+      <div class="top">
+        <a href="/lobby.html">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <a href="/buy.html">
+          <div id="money" class="money">
+            <p id="coin" class="coins"></p>
+          </div>
+        </a>
+        <a href="/profile.html">
+          <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
+        </a>
+      </div>
+    </header>
+
+    <div class="content">
+      <input type="image" id="character" src="" alt="avatar img" class="avatar">
+      <div class="avatar-shadow"></div>
+      <div class="horizontal-bar"></div>
+      <div id="name" class="container--account"></div>
+      <div class="container--button">
+        <a href="/"><button class="button--disconect">Disconnect</button></a>
+        <button onclick="deleteAccount(localStorage.getItem('pseudo'))" class="button--delete">Delete</button>
+      </div>
+    </div>
+
+    <footer>
+      <img src="/img/nuages-background.png" class="bottom-image" />
+    </footer>
+
+    <script>
+      async function getBalance(pseudo) {
+        const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+        const data = await response.json();
+
+        document.getElementById('coin').innerHTML = data.coins;
+      }
+
+      async function deleteAccount(pseudo) {
+        const response = await fetch(`/api/delete`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ pseudo })
+        });
+        const data = await response.json();
+        if (data.message === 'Account successfully deleted.') {
+          localStorage.removeItem('pseudo');
+          localStorage.removeItem('profilePicture');
+          window.location.href = '/';
+        } else {
+          alert('Erreur lors de la suppression du compte.');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const profileImage = localStorage.getItem('profilePicture');
+        const pseudo = localStorage.getItem('pseudo');
+        getBalance(localStorage.getItem("pseudo"))
+
+        if (profileImage) {
+          document.getElementById('profile-image').src = profileImage;
+          document.getElementById('character').src = profileImage;
+          document.getElementById('name').innerHTML = pseudo;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy</title>
+    <link rel="stylesheet" href="/css/buy.css" />
+    <link rel="stylesheet" href="/css/global/navbar.css" />
+    <link rel="stylesheet" href="/css/global/footer-game.css" />
+  </head>
+  <body>
+    <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
+    <header>
+      <div class="top">
+        <a href="/lobby.html">
+          <img src="/img/coin.png" class="coin" />
+        </a>
+        <a href="/buy.html">
+          <div id="money" class="money">
+            <p id="coin" class="coins"></p>
+          </div>
+        </a>
+        <a href="/profile.html">
+          <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
+        </a>
+      </div>
+    </header>
+
+    <img src="/img/cloud/buy.png" class="center-cloud" />
+    
+    <div class="container--controls">
+      <button class="button1" onclick="decreaseValue()" onmousedown="startDecrease()" onmouseup="stopIncreasing()" ontouchstart="startDecrease()" ontouchend="stopIncreasing()">-</button>
+      <input class="container--buy" type="number" class="input--win" id="inputValue" value="0" />
+      <button class="button2" onclick="increaseValue()" onmousedown="startIncrease()" onmouseup="stopIncreasing()" ontouchstart="startIncrease()" ontouchend="stopIncreasing()">+</button>
+    </div>
+
+    <button class="button--buy" onclick="updateBalance(localStorage.getItem('pseudo'))"></button>
+
+    <footer>
+      <img src="/img/nuages-background.png" class="bottom-image" />
+    </footer>
+
+    <script>      
+      let interval;
+
+      async function getBalance(pseudo) {
+        const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+        const data = await response.json();
+
+        document.getElementById('coin').innerHTML = data.coins;
+        return data.coins;
+      }
+
+      function increaseValue() {
+        var value = parseInt(document.getElementById('inputValue').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('inputValue').value = value;
+      }
+
+      function decreaseValue() {
+        var value = parseInt(document.getElementById('inputValue').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value--;
+        document.getElementById('inputValue').value = value;
+      }
+
+      function startIncrease() {
+        interval = setInterval(increaseValue, 100);
+      }
+
+      function startDecrease() {
+        interval = setInterval(decreaseValue, 100);
+      }
+
+      function stopIncreasing() {
+        clearInterval(interval);
+      }
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const profileImage = localStorage.getItem('profilePicture');
+        const pseudo = localStorage.getItem('pseudo');
+        await getBalance(pseudo);
+
+        if (profileImage) {
+          document.getElementById('profile-image').src = profileImage;
+        }
+      });
+
+      async function updateBalance(pseudo) {
+        const inputValue = parseInt(document.getElementById('inputValue').value, 10);
+        const currentMoney = await getBalance(pseudo);
+        const newBalance = currentMoney + inputValue;
+
+        const response = await fetch('/api/updateCoins', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pseudo, coins: newBalance })
+        });
+
+        const result = await response.json();
+        console.log("Updated balance:", result);
+        await getBalance(pseudo);
+      }
+    </script>
+  </body>
+</html>

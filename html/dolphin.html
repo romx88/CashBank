@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course de Dauphins</title>
+  <link rel="stylesheet" href="/css/dolphin.css">
+  <link rel="stylesheet" href="/css/global/footer-game.css">
+  <link rel="stylesheet" href="/css/global/navbar.css">
+  <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+  <header>
+    <div class="top">
+      <a href="/lobby.html">
+        <img src="/img/coin.png" class="coin" />
+      </a>
+      <a href="/buy.html">
+        <div id="money" class="money">
+          <p id="coin" class="coins"></p>
+        </div>
+      </a>
+      
+      <a href="/profile.html">
+        <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
+      </a>
+    </div>
+  </header>
+
+  <div class="cloud--bet">
+    <p class="current-bet">5</p>
+    <div class="container--button">
+      <button id="bett-less" class="button--less-bett">
+        <div class="button--less-bett-text">-</div>
+      </button>
+      <button id="bett-more" class="button--more-bett">
+        <div class="button--more-bett-text">+</div>
+      </button>
+      <button id="bett-max" class="button--max-bett">
+        <img src="/img/maxbet.png" alt="">
+        <div class="button--max-bett-text">max</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="container--card">
+    <div class="card--dolphin">
+      <input id="bet-input" type="number" class="input--dolphin" placeholder="enter number" min="1" max="3" required value="1">
+      <button id="start-button" class="button--start">bet</button>
+    </div>
+  </div>
+
+  <div class="race-track" id="race-track">
+  </div>
+
+  <div id="win-popup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <img src="/img/cloud/win.png" alt="Win">
+    </div>
+  </div>
+  
+  <div id="lose-popup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <img src="/img/cloud/loose.png" alt="Lose">
+    </div>
+  </div>
+
+  <footer>
+    <div class="bottom-image-wrapper">
+      <button class="coins--info"></button>
+      <div class="coins--info-dropdown">
+        <a href="#">Règles :
+          <br>- choisissez le montant
+          <br>que vous souhaiter miser.
+          <br>- Lancer la course en
+          <br>appuyant sur le bouton bet
+          <br>- vous pouvez relancer autant
+          <br>de fois que vous le voulez tant
+          <br>que vous avez des crédits
+        </a>
+        <a href="#">Attention !
+          <br>Les jeux d'argent sont vite
+          <br> addictif donc veuillez toujours
+          <br>jouer de façon responssable
+          <br>et fixez-vous une limite
+        </a>
+      </div>
+      <img src="/img/dolphin_background.png" class="bottom-image" />
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImage = localStorage.getItem('profilePicture');
+      const pseudo = localStorage.getItem('pseudo');
+      updateCoinDisplay(pseudo);
+      if (profileImage) {
+        document.getElementById('profile-image').src = profileImage;
+      }
+    });
+
+    function adjustBet(change) {
+      const betElement = document.querySelector('.current-bet');
+      let betAmount = parseInt(betElement.textContent);
+      betAmount = Math.max(1, betAmount + change);
+      betElement.textContent = betAmount;
+    }
+
+    async function setMaxBet() {
+      const pseudo = localStorage.getItem('pseudo');
+      const balance = await getBalance(pseudo);
+      document.querySelector('.current-bet').textContent = balance;
+    }
+
+    async function updateBalance(pseudo, newBalance) {
+      newBalance = roundToHalf(newBalance);
+      const response = await fetch('/api/updateCoins', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pseudo, coins: newBalance })
+      });
+      const result = await response.json();
+      console.log("Updated balance:", result);
+      updateCoinDisplay(pseudo);
+    }
+
+    async function updateCoinDisplay(pseudo) {
+      const balance = await getBalance(pseudo);
+      document.getElementById('coin').textContent = balance;
+    }
+
+    function roundToHalf(num) {
+      return Math.floor(num * 2) / 2;
+    }
+
+    async function getBalance(pseudo) {
+      const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+      const data = await response.json();
+      console.log("Fetched balance:", data.coins);
+      return data.coins;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const startButton = document.getElementById('start-button');
+        startButton.addEventListener('click', startRace);
+
+        const raceTrack = document.getElementById('race-track');
+      
+        for (let i = 1; i <= 3; i++) {
+            const dauphinDiv = document.createElement('div');
+            dauphinDiv.id = `dauphin${i}`;
+            dauphinDiv.classList.add('dauphin');
+            dauphinDiv.style.top = `${i * 50}px`;
+            const dauphinImg = document.createElement('img');
+            dauphinImg.src = '/img/dauphin.png';
+            dauphinImg.alt = `Dauphin ${i}`;
+            dauphinDiv.appendChild(dauphinImg);
+            raceTrack.appendChild(dauphinDiv);
+        }
+    });
+
+    async function startRace() {
+      const gunshotSounds = new Audio("/music/gunshot.mp3")
+      gunshotSounds.volume = 0.2;
+      gunshotSounds.play()
+      const startButton = document.getElementById('start-button');
+      startButton.classList.add('disabled');
+
+      const raceTrack = document.getElementById('race-track');
+      const betInput = document.getElementById('bet-input');
+      const betAmount = parseInt(document.querySelector('.current-bet').textContent);
+      const bet = parseInt(betInput.value);
+      const dolphins = document.querySelectorAll('.dauphin');
+
+      const pseudo = localStorage.getItem('pseudo');
+      let balance = await getBalance(pseudo);
+      if (balance < betAmount) {
+          alert("Vous n'avez pas assez d'argent pour placer cette mise !");
+          return;
+      }
+
+      balance -= betAmount;
+      await updateBalance(pseudo, balance);
+
+      dolphins.forEach(dauphin => dauphin.style.left = '0px');
+
+      let positions = [0, 0, 0];
+      let oscillations = [0, 0, 0];
+      let speeds = Array.from(dolphins).map(() => Math.random() * 5 + 1);
+      let finished = false;
+      let winner = null;
+
+      const raceInterval = setInterval(() => {
+          dolphins.forEach((dauphin, index) => {
+              if (!finished) {
+                  positions[index] += speeds[index];
+                  oscillations[index] += 0.1;
+                  dauphin.style.left = `${positions[index]}px`;
+                  dauphin.style.top = `${parseFloat(dauphin.style.top) + Math.sin(oscillations[index]) * 1.5}px`;
+
+                  if (Math.random() < 0.01) {
+                      speeds[index] = Math.random() * 5 + 1;
+                  }
+
+                  if (positions[index] >= raceTrack.offsetWidth - 300) {
+                      if (!finished) {
+                          finished = true;
+                          winner = index + 1;
+                          clearInterval(raceInterval);
+
+                          if (bet === winner) {
+                              document.getElementById('win-popup').style.display = 'block';
+                              balance += betAmount * 2;
+                              updateBalance(pseudo, balance);
+                          } else {
+                              document.getElementById('lose-popup').style.display = 'block';
+                          }
+
+                          setTimeout(() => {
+                              location.reload();
+                          }, 1000);
+                      }
+                  }
+              }
+          });
+      }, 20);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const winPopup = document.getElementById('win-popup');
+        const losePopup = document.getElementById('lose-popup');
+        const winCloseBtn = document.querySelector('#win-popup .close');
+        const loseCloseBtn = document.querySelector('#lose-popup .close');
+
+        winCloseBtn.addEventListener('click', () => {
+            winPopup.style.display = 'none';
+        });
+
+        loseCloseBtn.addEventListener('click', () => {
+            losePopup.style.display = 'none';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('bett-less').addEventListener('click', () => adjustBet(-1));
+        document.getElementById('bett-more').addEventListener('click', () => adjustBet(1));
+        document.getElementById('bett-max').addEventListener('click', setMaxBet);
+    });
+  </script>
+</body>
+</html>
