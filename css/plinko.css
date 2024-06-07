@@ -254,3 +254,30 @@ body {
   }
 }
 
+.coins--info-dropdown {
+  position: absolute;
+  top: -35vh;
+  right: 4.5%;
+  font-family: 'Bungee';
+  font-size: 15px;
+  border: 2px solid white;
+  background-color: #bb94fa;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  display: none;
+}
+
+.coins--info-dropdown a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.coins--info-dropdown a:hover {
+  background-color: #f1f1f1;
+}
+
+.coins--info:hover + .coins--info-dropdown {
+  display: block;
+}
