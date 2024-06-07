@@ -13,7 +13,7 @@
   <iframe src="music.html" style="display:none;" id="music-frame"></iframe>
   <header>
     <div class="top">
-      <a href="/">
+      <a href="/lobby.html">
         <img src="/img/coin.png" class="coin" />
       </a>
       <a href="/buy.html">
@@ -52,13 +52,13 @@
         <div id="right-barrier"></div>
     </div>
     <div id="multipliers">
-        <div class="multiplier">0.2</div>
         <div class="multiplier">0.5</div>
         <div class="multiplier">1</div>
-        <div class="multiplier">5</div>
+        <div class="multiplier">2</div>
+        <div class="multiplier">3</div>
+        <div class="multiplier">2</div>
         <div class="multiplier">1</div>
         <div class="multiplier">0.5</div>
-        <div class="multiplier">0.2</div>
     </div>
   </div>  
 
@@ -69,6 +69,23 @@
   <footer>
     <div class="bottom-image-wrapper">
       <button class="coins--info"></button>
+      <div class="coins--info-dropdown">
+        <a href="#">Règles :
+          <br>- choisissez le montant
+          <br>que vous souhaiter miser.
+          <br>- Lancer la roulette en
+          <br>appuyant sur le bouton spin
+          <br>- vous pouvez relancer autant
+          <br>de fois que vous le voulez tant
+          <br>que vous avez des crédits
+        </a>
+        <a href="#">Attention !
+          <br>Les jeux d'argent sont vite
+          <br> addictif donc veuillez toujours
+          <br>jouer de façon responssable
+          <br>et fixez-vous une limite
+        </a>
+      </div>
       <img src="/img/nuage-background.png" class="bottom-image" />
     </div>
   </footer>
@@ -187,25 +204,26 @@
     }
 
     async function checkMultiplier(x, betValue) {
-    const multipliers = document.getElementsByClassName('multiplier');
-    const index = Math.floor(x / 28.5);
-    const multiplier = parseFloat(multipliers[index].innerText);
-    multipliers[index].style.animation = 'downUp 0.1s ease';
-    setTimeout(() => {
-      multipliers[index].style.animation = '';
-    }, 500);
+    const serverMultipliers = Object.freeze([0.5, 1, 2, 3, 2, 1, 0.5]);
+      const multipliers = document.getElementsByClassName('multiplier');
+      const index = Math.floor(x / 28.5);
+      const multiplier = serverMultipliers[index];
+      multipliers[index].style.animation = 'downUp 0.1s ease';
+      setTimeout(() => {
+        multipliers[index].style.animation = '';
+      }, 500);
 
-    const winValue = betValue * multiplier;
+      const winValue = betValue * multiplier;
 
-    const pseudo = localStorage.getItem('pseudo');
-    let balance = await getBalance(pseudo);
-    balance += winValue;
-    await updateBalance(pseudo, balance);
+      const pseudo = localStorage.getItem('pseudo');
+      let balance = await getBalance(pseudo);
+      balance += winValue;
+      await updateBalance(pseudo, balance);
 
-    score += multiplier;
-    document.getElementById('score').innerText = `Score: ${score.toFixed(2)}`;
-    document.getElementById('money').innerText = `Argent: ${balance.toFixed(2)}`;
-}
+      score += multiplier;
+      document.getElementById('score').innerText = `Score: ${score.toFixed(2)}`;
+      document.getElementById('money').innerText = `Argent: ${balance.toFixed(2)}`;
+  }
 
 
     function adjustBet(change) {

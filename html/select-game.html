@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Game</title>
+    <title>Lobby</title>
     <link rel="stylesheet" href="/css/select-game.css">
+    <link rel="stylesheet" href="/css/global/navbar.css">
+    <link rel="stylesheet" href="/css/global/footer.css" />
 </head>
 <body>
     <header>
         <div class="top">
-            <img src="/img/coin.png" class="coin" alt="Pièce" />
-            <img src="/img/money.png" class="money" alt="Argent" />
-            <input type="image" id="image" alt="Login" src="/img/no-character.png" />
+          <a href="/lobby.html">
+            <img src="/img/coin.png" class="coin" />
+          </a>
+          <a href="/buy.html">
+            <div id="money" class="money">
+              <p id="coin" class="coins"></p>
+            </div>
+          </a>
+          
+          <a href="/profile.html">
+            <input type="image" class="profile-image" id="profile-image" alt="Profile" src="" />
+          </a>
         </div>
-    </header>
+      </header>
+    
 
     <main>
         <div class="image-container">
             <div class="helicopter" role="img" aria-label="Hélicoptère"></div>
             <div class="dolphin" role="img" aria-label="Dolphin Course">
-                <button class="play-button">Play</button>
+                <a href="/dolphin.html"><button class="play-button">Play</button></a>
             </div>
             <div class="corde-container">
                 <div class="corde"></div>
                 <div class="corde"></div>
             </div>
             <div class="slotmachine" role="img" aria-label="Machine à Sous">
-                <button class="play-button">Play</button>
+                <a href="/slot.html"><button class="play-button">Play</button></a>
             </div>
             <div class="corde-container">
                 <div class="corde"></div>
                 <div class="corde"></div>
             </div>
             <div class="plinko" role="img" aria-label="Plinko">
-                <button class="play-button">Play</button>
+                <a href="/plinko.html"><button class="play-button">Play</button></a>
             </div>
         </div>
     </main>
@@ -41,5 +53,28 @@
     <footer>
         <img src="/img/nuages-background.png" class="bottom-image" alt="Nuages" />
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const profileImage = localStorage.getItem('profilePicture');
+        const pseudo = localStorage.getItem('pseudo');
+        updateCoinDisplay(pseudo);
+        if (profileImage) {
+            document.getElementById('profile-image').src = profileImage;
+        }
+        });
+
+        async function updateCoinDisplay(pseudo) {
+            const balance = await getBalance(pseudo);
+            document.getElementById('coin').textContent = balance;
+        }
+
+        async function getBalance(pseudo) {
+            const response = await fetch(`/api/getCoins?pseudo=${pseudo}`);
+            const data = await response.json();
+            console.log("Fetched balance:", data.coins);
+            return data.coins;
+        }
+    </script>
 </body>
 </html>

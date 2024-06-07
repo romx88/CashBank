@@ -162,6 +162,7 @@ body.loose {
 }
 
 .button--spin {
+  z-index: 10;
   cursor: pointer;
   position: absolute;
   top: 65%;
@@ -182,46 +183,3 @@ body.loose {
   height: 200px;
 }
 
-.coins--info {
-  background: none;
-  background-image: url("/img/coins_info.png");
-  background-size: contain;
-  z-index: 2;
-  border: none;
-  position: absolute;
-  right: 1%;
-  margin-top: -2%;
-  width: 60px;
-  height: 60px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  padding: 0;
-  cursor: pointer;
-}
-
-.coins--info-dropdown {
-  position: absolute;
-  top: -35vh;
-  right: 4.5%;
-  font-family: 'Bungee';
-  font-size: 15px;
-  border: 2px solid white;
-  background-color: #32a9c7;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  border-radius: 8px;
-  display: none;
-}
-
-.coins--info-dropdown a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: white;
-}
-
-.coins--info-dropdown a:hover {
-  background-color: #f1f1f1;
-}
-
-.coins--info:hover + .coins--info-dropdown {
-  display: block;
-}

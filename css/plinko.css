@@ -130,6 +130,7 @@ body {
 }
 
 .button--spin {
+  z-index: 10;
   cursor: pointer;
   position: absolute;
   top: 65%;
